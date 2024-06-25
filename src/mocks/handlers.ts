@@ -26,6 +26,8 @@ export const handlers = [
       const url = new URL(request.url);
       const lat = Number(url.searchParams.get('lat'));
 
+      await delay(500);
+
       for (let i = 0; i < locationDataMock.length; i++) {
         if (lat === locationDataMock[i].lat) {
           return HttpResponse.json(weatherDataList[i]);

@@ -79,15 +79,35 @@ describe('Searching', () => {
   });
 
   it.each(locationDataMock)(
-    'Should render name: $name, latitude: $lat, longitude: $lon, country: $country, state: $state if the city exists. Local names should not be rendered nor tested to',
+    'Should render name: $name, country: $country, state: $state if the city exists. Local names should not be rendered nor tested to',
     async data => {
       const { user } = setup();
 
       await searchLocation(user, 'london');
 
       for (let [key, entry] of Object.entries(data)) {
-        key !== 'local_names' && (await screen.findAllByText(entry));
+        key !== 'local_names' &&
+          key !== 'lat' &&
+          key !== 'lon' &&
+          (await screen.findAllByText(entry));
       }
+    }
+  );
+
+  it.each(locationDataMock)(
+    'Should not render latitude and longitude',
+    async ({ name, lat, lon }) => {
+      const { user } = setup();
+
+      await searchLocation(user, 'london');
+
+      await screen.findByText(name);
+
+      const latitude = screen.queryByText(lat);
+      expect(latitude).toBeNull();
+
+      const longitude = screen.queryByText(lon);
+      expect(longitude).toBeNull();
     }
   );
 });
@@ -107,23 +127,21 @@ describe("Location's weather", () => {
     return await screen.findByTestId(lat + lon);
   }
 
-  async function clickShowWeatherButton(
-    user: UserEvent,
-    locationElement: HTMLElement
-  ) {
-    await user.click(
-      await within(locationElement).findByTestId(showWeatherButton.testid)
-    );
-  }
-
   it.each(locationDataMock)(
     `Should render a loading indicator with data-testid: ${loadingIndicator.testid} when clicking each location's button for showing it's weather`,
     async ({ lat, lon }) => {
       const { user } = setup();
       await searchLocation(user, 'london');
       const location = await getLocationElement(lat, lon);
-      await clickShowWeatherButton(user, location);
-      await within(location).findByTestId(loadingIndicator.testid);
+      const showButton = await within(location).findByTestId(
+        showWeatherButton.testid
+      );
+      await user.click(showButton);
+      await within(location).findByTestId(
+        loadingIndicator.testid,
+        {},
+        { timeout: 3000 }
+      );
     }
   );
 
@@ -132,7 +150,7 @@ describe("Location's weather", () => {
     return result;
   });
 
-  it.only.each(locationWithWeatherData)(
+  it.each(locationWithWeatherData)(
     `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all, rain past hour: $rain.1h, snow past hour: $snow.1h`,
     async ({
       weather,
@@ -149,7 +167,10 @@ describe("Location's weather", () => {
       await searchLocation(user, 'london');
 
       const location = await getLocationElement(lat, lon);
-      await clickShowWeatherButton(user, location);
+      const showButton = await within(location).findByTestId(
+        showWeatherButton.testid
+      );
+      await user.click(showButton);
 
       await within(location).findByText(weather[0].main);
       await within(location).findByText(weather[0].description);
