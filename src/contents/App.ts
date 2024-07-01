@@ -11,13 +11,4 @@ const error = {
 const button = {
   text: 'Search',
 };
-
-const loadingIndicator = {
-  testid: 'loading-indicator'
-}
-
-const showWeatherButton = {
-  testid: 'show-weather'
-}
-
-export { error, input, button, loadingIndicator, showWeatherButton };
+export { error, input, button };

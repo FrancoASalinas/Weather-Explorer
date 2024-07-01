@@ -1,14 +1,13 @@
-import { showWeatherButton } from '../contents/App';
-import { Location } from '../types';
+import { Location as LocationType } from '../types';
 import LoadingIndicator from './LoadingIndicator';
+import Location from './Location';
 
 type Props = {
   isLoading: boolean;
   unexpectedError: boolean;
   isSearched: boolean;
-  locationArray: Location[];
+  locationArray: LocationType[];
   error: { [key: string]: string };
-  onClick: (lat: number, lon: number) => void;
 };
 
 export default function Locations({
@@ -17,7 +16,6 @@ export default function Locations({
   isSearched,
   locationArray,
   unexpectedError,
-  onClick,
 }: Props) {
   if (isLoading) {
     return <LoadingIndicator />;
@@ -31,66 +29,9 @@ export default function Locations({
 
   return (
     <ul className='location-search__locations'>
-      {locationArray.map(
-        ({
-          lat,
-          lon,
-          name,
-          country,
-          state,
-          isLoadingWeather,
-          currentWeather,
-        }) => (
-          <li key={lat + lon} data-testid={lat + lon}>
-            <ul>
-              <li>{name}</li>
-              <li>{country}</li>
-              {state && <li>{state}</li>}
-              <button
-                onClick={() => onClick(lat, lon)}
-                data-testid={showWeatherButton.testid}
-              >
-                Show weather
-              </button>
-            </ul>
-            <ul>{populateLocationWeather(isLoadingWeather, currentWeather)}</ul>
-          </li>
-        )
-      )}
+      {locationArray.map(location => (
+        <Location key={location.lat + location.lon} location={location} />
+      ))}
     </ul>
   );
-
-  function populateLocationWeather(
-    isLoadingWeather: boolean | undefined,
-    currentWeather: Location['currentWeather']
-  ) {
-    if (isLoadingWeather) {
-      return <LoadingIndicator />;
-    } else if (currentWeather !== undefined) {
-      const result = [];
-      const { weather, main, visibility, wind, clouds, rain, snow } =
-        currentWeather;
-      const weatherInfo = Array<any>(
-        weather[0],
-        main,
-        { visibility },
-        wind,
-        clouds,
-        rain,
-        snow
-      );
-
-      for (let record of weatherInfo) {
-        record && result.push(createListsFromRecord(record));
-      }
-
-      return result;
-
-      function createListsFromRecord(record: { any: any }) {
-        return Object.entries(record).map(([key, value]) => (
-          <li key={key + value}>{value}</li>
-        ));
-      }
-    }
-  }
 }

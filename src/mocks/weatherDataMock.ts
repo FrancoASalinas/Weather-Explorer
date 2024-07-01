@@ -102,7 +102,7 @@ const mock: WeatherData[] = [
     ],
     base: 'stations',
     main: {
-      temp: 299.57,
+      temp: 299.58,
       feels_like: 299.57,
       temp_min: 298.85,
       temp_max: 299.96,

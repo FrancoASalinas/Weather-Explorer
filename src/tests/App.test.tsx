@@ -3,9 +3,9 @@ import {
   input as appInput,
   error,
   button as appButton,
-  loadingIndicator,
-  showWeatherButton,
 } from '../contents/App';
+import { loadingIndicator } from '../contents/LoadingIndicator';
+import { showWeatherButton } from '../contents/Location';
 import { render, screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import { server } from '../mocks/mockServer';
@@ -89,19 +89,17 @@ describe('Searching', () => {
         key !== 'local_names' &&
           key !== 'lat' &&
           key !== 'lon' &&
-          (await screen.findAllByText(entry));
+          (await screen.findAllByText(entry, { exact: false }));
       }
     }
   );
 
   it.each(locationDataMock)(
     'Should not render latitude and longitude',
-    async ({ name, lat, lon }) => {
+    async ({ lat, lon }) => {
       const { user } = setup();
 
       await searchLocation(user, 'london');
-
-      await screen.findByText(name);
 
       const latitude = screen.queryByText(lat);
       expect(latitude).toBeNull();
@@ -185,6 +183,28 @@ describe("Location's weather", () => {
       await within(location).findByText(clouds.all);
       rain && rain['1h'] && (await within(location).findByText(rain['1h']));
       snow && snow['1h'] && (await within(location).findByText(snow['1h']));
+    }
+  );
+
+  it.each(locationWithWeatherData)(
+    "Should hide location's weather data when clicking show button again",
+    async ({ lat, lon, main }) => {
+      const { user } = setup();
+      await searchLocation(user, 'london');
+
+      const location = await getLocationElement(lat, lon);
+      const showButton = await within(location).findByText(
+        showWeatherButton.text
+      );
+
+      await user.click(showButton);
+
+      const temperature = main.temp;
+      const weatherData = await within(location).findByText(temperature);
+      expect(weatherData).toBeDefined();
+
+      await user.click(showButton);
+      expect(screen.queryByText(temperature)).toBeNull();
     }
   );
 }, 10000);

@@ -1,4 +1,4 @@
- import { loadingIndicator } from "../contents/App";
+ import { loadingIndicator } from "../contents/LoadingIndicator";
  const LoadingIndicator = () => (
     <span data-testid={loadingIndicator.testid}>loading...</span>
   );

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { button, error, input } from './contents/App';
 import API_KEY from './API_KEY';
-import { WeatherData, Location } from './types';
+import { Location } from './types';
 import Locations from './components/Locations';
 
 function App() {
@@ -29,7 +29,6 @@ function App() {
         </button>
       </div>
       <Locations
-        onClick={handleLocationClick}
         error={error}
         isLoading={isLoading}
         isSearched={isSearched}
@@ -54,56 +53,13 @@ function App() {
       .then(
         (data: Location[]) =>
           data &&
-          setLocationArray(
-            data.map(location => {
-              location.isLoadingWeather = false;
-              return location;
-            })
-          )
+          setLocationArray(data)
       )
       .then(() => {
         setIsSearched(true);
         setIsLoading(false);
       })
       .catch(error => console.error(error));
-  }
-
-  async function handleLocationClick(locationLat: number, locationLon: number) {
-    console.log('click');
-    isLoading(true);
-
-    await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${locationLat}&lon=${locationLon}&appid=${API_KEY}`
-    )
-      .then(res => res.json())
-      .then((data: WeatherData) => transformLocation(data));
-
-    isLoading(false);
-
-    function isLoading(value: boolean) {
-      setLocationArray(prev =>
-        prev.map(location => {
-          if (location.lat === locationLat && location.lon === locationLon) {
-            location.isLoadingWeather = value;
-            return location;
-          }
-          return location;
-        })
-      );
-    }
-
-    function transformLocation(data: WeatherData) {
-      setLocationArray(prev =>
-        prev.map(location => {
-          if (location.lat === locationLat && location.lon === locationLon) {
-            location.currentWeather = data;
-            location.isLoadingWeather = false;
-            return location;
-          }
-          return location;
-        })
-      );
-    }
   }
 }
 

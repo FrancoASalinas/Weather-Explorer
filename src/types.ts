@@ -39,8 +39,6 @@ type Location = {
   lon: number;
   country: string;
   state: string;
-  isLoadingWeather: boolean | undefined;
-  currentWeather?: WeatherData;
 };
 
 export { type WeatherData, type Location };
