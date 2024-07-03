@@ -1,4 +1,4 @@
-import { WeatherData } from "../types";
+import { WeatherData } from '../types';
 
 const mock: WeatherData[] = [
   {
@@ -128,92 +128,6 @@ const mock: WeatherData[] = [
     timezone: -14400,
     id: 6058560,
     name: 'London2',
-    cod: 200,
-  },
-  {
-    coord: {
-      lon: -0.1683,
-      lat: 51.4875,
-    },
-    weather: [
-      {
-        id: 800,
-        main: 'Clear',
-        description: 'clear sky',
-        icon: '01n',
-      },
-    ],
-    base: 'stations',
-    main: {
-      temp: 289.18,
-      feels_like: 288.64,
-      temp_min: 287.17,
-      temp_max: 290.49,
-      pressure: 1005,
-      humidity: 69,
-    },
-    visibility: 10000,
-    wind: {
-      speed: 4.63,
-      deg: 220,
-    },
-    clouds: {
-      all: 0,
-    },
-    dt: 1718569612,
-    sys: {
-      type: 2,
-      id: 2035324,
-      country: 'GB',
-      sunrise: 1718509379,
-      sunset: 1718569198,
-    },
-    timezone: 3600,
-    id: 2653265,
-    name: 'Chelsea',
-    cod: 200,
-  },
-  {
-    coord: {
-      lon: -84.0833,
-      lat: 37.129,
-    },
-    weather: [
-      {
-        id: 802,
-        main: 'Clouds',
-        description: 'scattered clouds',
-        icon: '03d',
-      },
-    ],
-    base: 'stations',
-    main: {
-      temp: 305.58,
-      feels_like: 308.06,
-      temp_min: 303,
-      temp_max: 306.51,
-      pressure: 1018,
-      humidity: 49,
-    },
-    visibility: 10000,
-    wind: {
-      speed: 2.57,
-      deg: 180,
-    },
-    clouds: {
-      all: 40,
-    },
-    dt: 1718570155,
-    sys: {
-      type: 1,
-      id: 4746,
-      country: 'US',
-      sunrise: 1718532959,
-      sunset: 1718585903,
-    },
-    timezone: -14400,
-    id: 4298960,
-    name: 'London3',
     cod: 200,
   },
 ];

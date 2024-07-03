@@ -1,9 +1,5 @@
 import App from '../App';
-import {
-  input as appInput,
-  error,
-  button as appButton,
-} from '../contents/App';
+import { input as appInput, error, button as appButton } from '../contents/App';
 import { loadingIndicator } from '../contents/LoadingIndicator';
 import { showWeatherButton } from '../contents/Location';
 import { render, screen, within } from '@testing-library/react';
@@ -148,6 +144,22 @@ describe("Location's weather", () => {
     return result;
   });
 
+  async function showLocationWeather(
+    user: UserEvent,
+    lat: number,
+    lon: number
+  ) {
+    await searchLocation(user, 'london');
+
+    const location = await getLocationElement(lat, lon);
+    const showButton = await within(location).findByTestId(
+      showWeatherButton.testid
+    );
+    await user.click(showButton);
+
+    return location;
+  }
+
   it.each(locationWithWeatherData)(
     `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all, rain past hour: $rain.1h, snow past hour: $snow.1h`,
     async ({
@@ -155,34 +167,44 @@ describe("Location's weather", () => {
       main,
       visibility,
       wind,
-      clouds,
-      rain,
-      snow,
       lat,
       lon,
     }) => {
       const { user } = setup();
-      await searchLocation(user, 'london');
 
-      const location = await getLocationElement(lat, lon);
-      const showButton = await within(location).findByTestId(
-        showWeatherButton.testid
-      );
-      await user.click(showButton);
+      const location = await showLocationWeather(user, lat, lon);
 
-      await within(location).findByText(weather[0].main);
-      await within(location).findByText(weather[0].description);
-      await within(location).findAllByText(main.temp);
-      await within(location).findByText(main.temp_max);
-      await within(location).findByText(main.temp_min);
-      await within(location).findByText(main.humidity);
-      visibility && (await within(location).findByText(visibility));
-      await within(location).findAllByText(main.feels_like);
-      await within(location).findByText(wind.speed);
-      await within(location).findByText(wind.deg);
-      await within(location).findByText(clouds.all);
-      rain && rain['1h'] && (await within(location).findByText(rain['1h']));
-      snow && snow['1h'] && (await within(location).findByText(snow['1h']));
+      await within(location).findByText(`${weather[0].main} (${weather[0].description})`);
+
+      await within(location).findByText(`Temperature`);
+      await within(location).findByText(`${main.temp}ºC`);
+      await within(location).findByText(`Max: ${main.temp_max}ºC`);
+      await within(location).findByText(`Min: ${main.temp_min}ºC`);
+      await within(location).findAllByText(`Feels like: ${main.feels_like}ºC`);
+
+      await within(location).findByText('Humidity');
+      await within(location).findByText(`${main.humidity}%`);
+
+      if(visibility){
+        await within(location).findByText('Visibility');
+        await within(location).findByText(`${visibility}km`);
+      }
+
+      await within(location).findByText('Wind');
+      await within(location).findByText(`Speed: ${wind.speed}m/s`);
+      await within(location).findByText(`Direction: ${wind.deg}º`);
+    }
+  );
+
+  it.each(locationWithWeatherData)(
+    'Should not render weather id',
+    async ({ weather, lat, lon, main }) => {
+      const { user } = setup();
+      const location = await showLocationWeather(user, lat, lon);
+
+      await within(location).findByText(main.temp, { exact: false });
+
+      expect(within(location).queryByText(weather[0].id, { exact: false })).toBeNull();
     }
   );
 
@@ -200,7 +222,9 @@ describe("Location's weather", () => {
       await user.click(showButton);
 
       const temperature = main.temp;
-      const weatherData = await within(location).findByText(temperature);
+      const weatherData = await within(location).findByText(temperature, {
+        exact: false,
+      });
       expect(weatherData).toBeDefined();
 
       await user.click(showButton);
