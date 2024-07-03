@@ -30,7 +30,11 @@ export default function Location({ location }: { location: LocationType }) {
       data-testid={lat + lon}
       className='location-search__locations__location'
     >
-      <div className='location-search__locations__location__main'>
+      <div
+        className={`location-search__locations__location__main ${
+          isToggle && 'location-search__locations__location__main--toggle'
+        }`}
+      >
         <div className='location-search__locations__location__name'>
           <span>
             {name}, {country}
@@ -38,7 +42,7 @@ export default function Location({ location }: { location: LocationType }) {
           {state && <span>{state}</span>}
         </div>
         <button
-        className='location-search__locations__location__button'
+          className='location-search__locations__location__button'
           onClick={handleLocationClick}
           data-testid={showWeatherButton.testid}
         >
@@ -88,12 +92,12 @@ export default function Location({ location }: { location: LocationType }) {
             </ul>
           </li>
           {visibility && (
-          <li className='location-search__locations__location__weather__data-item'>
-            <span>Visibility</span>
-            <ul>
+            <li className='location-search__locations__location__weather__data-item'>
+              <span>Visibility</span>
+              <ul>
                 <li>{visibility / 1000}km</li>
-            </ul>
-          </li>
+              </ul>
+            </li>
           )}
           <li className='location-search__locations__location__weather__data-item'>
             <span>Wind</span>

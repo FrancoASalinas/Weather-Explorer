@@ -89,25 +89,30 @@
   border-radius: var(--size-1);
 }
 
+.location-search__search-controls__button:hover {
+  cursor: pointer;
+}
+
 .location-search__locations {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--size-2);
 }
 
 .location-search__locations__location {
   display: flex;
+  border-bottom: 1px solid var(--primary-400);
   flex-direction: column;
   justify-content: center;
   width: 100%;
   max-width: var(--size-14);
-  border: 2px solid var(--primary-400);
   align-items: baseline;
-  gap: var(--size-3);
   padding: var(--size-2);
-  border-radius: var(--size-1)
+}
+
+.location-search__locations__location:first-child {
+  border-top: 1px solid var(--primary-400);
 }
 
 .location-search__locations__location__main {
@@ -115,14 +120,30 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  padding: var(--size-1);
+}
+
+.location-search__locations__location__main--toggle {
+  box-shadow: 0 6px 3px -4px #859ba8;
 }
 
 .location-search__locations__location__button {
+  width: max-content;
   background-color: var(--primary-600);
   color: var(--primary-100);
   padding: var(--size-2);
   font-size: var(--font-size-2);
   border-radius: var(--size-1);
+}
+
+.location-search__locations__location__button:hover {
+  background-color: var(--primary-700);
+  cursor: pointer;
+}
+
+.location-search__locations__location__name {
+  width: max-content;
+  max-width: 50%;
 }
 
 .location-search__locations__location__name span:first-child {
@@ -139,9 +160,11 @@
 
 .location-search__locations__location__weather {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: start;
   gap: var(--size-2);
+  padding: var(--size-2);
 }
 
 .location-search__locations__location__weather__data-item {
