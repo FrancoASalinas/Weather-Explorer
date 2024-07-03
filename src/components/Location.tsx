@@ -87,12 +87,14 @@ export default function Location({ location }: { location: LocationType }) {
               <li>{main.humidity}%</li>
             </ul>
           </li>
+          {visibility && (
           <li className='location-search__locations__location__weather__data-item'>
             <span>Visibility</span>
             <ul>
-              <li>{visibility}km</li>
+                <li>{visibility / 1000}km</li>
             </ul>
           </li>
+          )}
           <li className='location-search__locations__location__weather__data-item'>
             <span>Wind</span>
             <ul>
