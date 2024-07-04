@@ -1,5 +1,11 @@
 import App from '../App';
-import { input as appInput, error, button as appButton } from '../contents/App';
+import {
+  input as appInput,
+  error,
+  button as appButton,
+  nav,
+  map,
+} from '../contents/App';
 import { loadingIndicator } from '../contents/LoadingIndicator';
 import { showWeatherButton } from '../contents/Location';
 import { render, screen, within } from '@testing-library/react';
@@ -162,19 +168,14 @@ describe("Location's weather", () => {
 
   it.each(locationWithWeatherData)(
     `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all, rain past hour: $rain.1h, snow past hour: $snow.1h`,
-    async ({
-      weather,
-      main,
-      visibility,
-      wind,
-      lat,
-      lon,
-    }) => {
+    async ({ weather, main, visibility, wind, lat, lon }) => {
       const { user } = setup();
 
       const location = await showLocationWeather(user, lat, lon);
 
-      await within(location).findByText(`${weather[0].main} (${weather[0].description})`);
+      await within(location).findByText(
+        `${weather[0].main} (${weather[0].description})`
+      );
 
       await within(location).findByText(`Temperature`);
       await within(location).findByText(`${main.temp}ºC`);
@@ -185,7 +186,7 @@ describe("Location's weather", () => {
       await within(location).findByText('Humidity');
       await within(location).findByText(`${main.humidity}%`);
 
-      if(visibility){
+      if (visibility) {
         await within(location).findByText('Visibility');
         await within(location).findByText(`${visibility}km`);
       }
@@ -204,7 +205,9 @@ describe("Location's weather", () => {
 
       await within(location).findByText(main.temp, { exact: false });
 
-      expect(within(location).queryByText(weather[0].id, { exact: false })).toBeNull();
+      expect(
+        within(location).queryByText(weather[0].id, { exact: false })
+      ).toBeNull();
     }
   );
 
@@ -232,3 +235,33 @@ describe("Location's weather", () => {
     }
   );
 }, 10000);
+
+describe.only('Navigation', () => {
+  describe('Interactive Map', () => {
+    it(`Should render \'${nav.map.text}\'`, () => {
+      setup();
+      screen.getByText(nav.map.text);
+    });
+
+    it('Should not render any search result when clicking the link', async () => {
+      const { user } = setup();
+      const link = screen.getByText(nav.map.text);
+
+      await searchLocation(user, 'london');
+
+      await screen.findAllByText(/London/);
+
+      await user.click(link);
+      expect(screen.queryByText(/london/)).toBeNull();
+    });
+
+    it('Should render the interactive map element when clicking the link', async () => {
+      const {user} = setup();
+
+      const link = screen.getByText(nav.map.text);
+      await user.click(link);
+
+      await screen.findByTestId(map.testId);
+    });
+  });
+});

@@ -11,4 +11,14 @@ const error = {
 const button = {
   text: 'Search',
 };
-export { error, input, button };
+
+const nav = {
+  map: {
+    text: 'Interactive Map'
+  }
+}
+
+const map = {
+  testId: 'interactive-map'
+}
+export { error, input, button, nav, map };
