@@ -7,7 +7,7 @@
   outline: none;
   border: none;
   list-style-type: none;
-  font-family: var(--font-text)
+  font-family: var(--font-text);
 }
 
 @font-face {
@@ -58,7 +58,7 @@
   --font-size-10: 60px;
   --font-size-11: 72px;
   --font-text: 'Work Sans';
-  --font-headline: 'Cabin'
+  --font-headline: 'Cabin';
 }
 
 #root {
@@ -159,7 +159,7 @@
 .location-search__locations__location__name {
   width: max-content;
   max-width: 50%;
-  font-family: var(--font-headline)
+  font-family: var(--font-headline);
 }
 
 .location-search__locations__location__name span:first-child {
@@ -195,7 +195,7 @@
   font-family: var(--font-headline);
 }
 
-.map-container{
-  height: 800px;
-  width: 500px
+.map-container {
+  height: 300px;
+  width: 300px;
 }

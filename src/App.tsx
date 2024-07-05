@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { button, error, input, map, nav } from './contents/App';
 import API_KEY from './API_KEY';
 import { Location } from './types';
 import Locations from './components/Locations';
-import Leaflet from 'leaflet';
+import L from 'leaflet';
 
 function App() {
   const [searchInput, setSearchInput] = useState('');
@@ -12,16 +12,22 @@ function App() {
   const [unexpectedError, setUnexpectedError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [toggleMap, setToggleMap] = useState(false);
-  const mapRef = useRef(null);
 
   useEffect(() => {
     if (toggleMap) {
       const map =
-        mapRef?.current &&
-        Leaflet.map(mapRef.current, { center: [1, 1], zoom: 1 });
+        L.map('map', { center: [0, 0], zoom: 1 });
 
       map &&
-        Leaflet.tileLayer(
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          tileSize: 212,
+          attribution:
+            '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        }).addTo(map);
+
+      map &&
+        L.tileLayer(
           `https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`,
           { maxZoom: 9 }
         ).addTo(map);
@@ -55,7 +61,7 @@ function App() {
           <div
             data-testid={map.testId}
             className='map-container'
-            ref={mapRef}
+            id='map'
           ></div>
         ) : (
           <Locations
