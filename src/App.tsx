@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { button, error, input, map, nav } from './contents/App';
 import API_KEY from './API_KEY';
 import { Location } from './types';
 import Locations from './components/Locations';
 import L from 'leaflet';
+import SearchBar from './components/Searchbar';
 
 function App() {
   const [searchInput, setSearchInput] = useState('');
@@ -15,8 +16,7 @@ function App() {
 
   useEffect(() => {
     if (toggleMap) {
-      const map =
-        L.map('map', { center: [0, 0], zoom: 1 });
+      const map = L.map('map', { center: [0, 0], zoom: 1 });
 
       map &&
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -36,27 +36,17 @@ function App() {
 
   return (
     <>
-      <header>
-        <nav>
+      <header className='header'>
+        {/* <button className='header__bars'>O</button> */}
+        {/* <nav className='header__nav--wide'>
+          <a onClick={() => setToggleMap(true)}>{nav.map.text}</a>
+        </nav> */}
+        <nav className='header__nav--narrow'>
           <a onClick={() => setToggleMap(true)}>{nav.map.text}</a>
         </nav>
+        <SearchBar onClick={handleClick} onChange={(e) => setSearchInput(e.target.value)} value={searchInput}/>
       </header>
       <main className='location-search'>
-        <div className='location-search__search-controls'>
-          <input
-            className='location-search__search-controls__input'
-            type='text'
-            placeholder={input.placeholder}
-            onChange={e => setSearchInput(e.target.value.trim())}
-          />
-          <button
-            disabled={searchInput === ''}
-            onClick={handleClick}
-            className='location-search__search-controls__button'
-          >
-            {button.text}
-          </button>
-        </div>
         {toggleMap ? (
           <div
             data-testid={map.testId}

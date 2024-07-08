@@ -188,7 +188,7 @@ describe("Location's weather", () => {
 
       if (visibility) {
         await within(location).findByText('Visibility');
-        await within(location).findByText(`${visibility}km`);
+        await within(location).findByText(`${visibility / 1000}km`);
       }
 
       await within(location).findByText('Wind');
@@ -236,7 +236,7 @@ describe("Location's weather", () => {
   );
 }, 10000);
 
-describe.only('Navigation', () => {
+describe('Navigation', () => {
   describe('Interactive Map', () => {
     it(`Should render \'${nav.map.text}\'`, () => {
       setup();
