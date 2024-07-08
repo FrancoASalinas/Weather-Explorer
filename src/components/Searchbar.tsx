@@ -1,4 +1,4 @@
-import { button, input } from "../contents/App";
+import { button, input } from "../contents/Searchbar";
 
 export default function SearchBar({
     onClick,

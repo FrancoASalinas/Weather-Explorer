@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { button, error, input, map, nav } from './contents/App';
+import { useState, useEffect } from 'react';
+import { error, map, nav } from './contents/App';
 import API_KEY from './API_KEY';
 import { Location } from './types';
 import Locations from './components/Locations';
@@ -13,6 +13,7 @@ function App() {
   const [unexpectedError, setUnexpectedError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [toggleMap, setToggleMap] = useState(false);
+  const [toggleNav, setToggleNav] = useState(false);
 
   useEffect(() => {
     if (toggleMap) {
@@ -34,17 +35,34 @@ function App() {
     }
   }, [toggleMap]);
 
+  const NavLinks = () => <a className={toggleMap ? 'header__nav__link--active' : 'header__nav__link'} onClick={() => {setToggleMap(true); setToggleNav(false)}}>{nav.map.text}</a>
+
   return (
     <>
       <header className='header'>
-        {/* <button className='header__bars'>O</button> */}
-        {/* <nav className='header__nav--wide'>
-          <a onClick={() => setToggleMap(true)}>{nav.map.text}</a>
-        </nav> */}
-        <nav className='header__nav--narrow'>
-          <a onClick={() => setToggleMap(true)}>{nav.map.text}</a>
+        <button
+          className='header__bars'
+          onClick={() => setToggleNav(prev => !prev)}
+        >
+          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'>
+            <path d='M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z' />
+          </svg>
+        </button>
+        <nav className='header__nav--wide'>
+          <NavLinks />
         </nav>
-        <SearchBar onClick={handleClick} onChange={(e) => setSearchInput(e.target.value)} value={searchInput}/>
+        <nav
+          className={
+            toggleNav ? 'header__nav--narrow--active' : 'header__nav--narrow'
+          }
+        >
+          <NavLinks />
+        </nav>
+        <SearchBar
+          onClick={handleClick}
+          onChange={e => setSearchInput(e.target.value)}
+          value={searchInput}
+        />
       </header>
       <main className='location-search'>
         {toggleMap ? (

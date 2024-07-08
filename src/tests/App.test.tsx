@@ -1,11 +1,6 @@
 import App from '../App';
-import {
-  input as appInput,
-  error,
-  button as appButton,
-  nav,
-  map,
-} from '../contents/App';
+import { error, nav, map } from '../contents/App';
+import { input as appInput, button as appButton } from '../contents/Searchbar';
 import { loadingIndicator } from '../contents/LoadingIndicator';
 import { showWeatherButton } from '../contents/Location';
 import { render, screen, within } from '@testing-library/react';
@@ -240,12 +235,12 @@ describe('Navigation', () => {
   describe('Interactive Map', () => {
     it(`Should render \'${nav.map.text}\'`, () => {
       setup();
-      screen.getByText(nav.map.text);
+      screen.getAllByText(nav.map.text);
     });
 
     it('Should not render any search result when clicking the link', async () => {
       const { user } = setup();
-      const link = screen.getByText(nav.map.text);
+      const link = screen.getAllByText(nav.map.text)[0];
 
       await searchLocation(user, 'london');
 
@@ -256,9 +251,9 @@ describe('Navigation', () => {
     });
 
     it('Should render the interactive map element when clicking the link', async () => {
-      const {user} = setup();
+      const { user } = setup();
 
-      const link = screen.getByText(nav.map.text);
+      const link = screen.getAllByText(nav.map.text)[0];
       await user.click(link);
 
       await screen.findByTestId(map.testId);
