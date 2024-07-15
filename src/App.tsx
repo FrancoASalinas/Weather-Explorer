@@ -35,6 +35,7 @@ function App() {
   }, [toggleMap]);
 
   async function handleSearch() {
+    setToggleMap(false);
     setIsLoading(true);
 
     await fetch(

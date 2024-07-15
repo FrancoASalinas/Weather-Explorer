@@ -31,6 +31,11 @@ function getSearchButton() {
   return screen.getByText(appButton.text);
 }
 
+async function clickMapLink(user: UserEvent) {
+  const link = screen.getAllByText(nav.map.text)[0];
+  await user.click(link);
+}
+
 beforeAll(() => server.listen());
 
 it(`Should render an input with placeholder ${appInput.placeholder}`, () => {
@@ -253,10 +258,21 @@ describe('Navigation', () => {
     it('Should render the interactive map element when clicking the link', async () => {
       const { user } = setup();
 
-      const link = screen.getAllByText(nav.map.text)[0];
-      await user.click(link);
+      await clickMapLink(user);
 
       await screen.findByTestId(map.testId);
+    });
+
+    it('Should stop showing the interactive map if the user searches for a location', async () => {
+      const { user } = setup();
+
+      await clickMapLink(user);
+
+      await screen.findByTestId(map.testId);
+
+      await searchLocation(user, 'london');
+
+      expect(screen.queryByTestId(map.testId)).toBeNull();
     });
   });
 });
