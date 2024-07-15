@@ -63,21 +63,18 @@
 
 #root {
   background-color: var(--primary-300);
-  height: 100vh;
-  width: 100vw;
-  overflow-x: hidden;
+  min-height: 100vh;
 }
 
 .location-search {
   width: 100%;
   height: 100%;
-  padding: var(--size-4);
+  padding: var(--size-8) var(--size-4);
   display: flex;
   flex-direction: column;
   justify-content: start;
   gap: var(--size-4);
   align-items: center;
-  margin: var(--size-7) 0;
   z-index: 10;
   position: relative;
 }
@@ -178,6 +175,7 @@
   align-items: center;
   border-bottom: var(--primary-700) 1px solid;
   z-index: 100;
+  background-color: var(--primary-500);
 }
 
 .header__bars {
