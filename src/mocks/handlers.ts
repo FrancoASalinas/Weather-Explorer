@@ -4,7 +4,7 @@ import weatherDataList from './weatherDataMock';
 
 export const handlers = [
   http.get(
-    `http://api.openweathermap.org/geo/1.0/direct`,
+    `https://api.openweathermap.org/geo/1.0/direct`,
     async ({ request }) => {
       const url = new URL(request.url);
       const city = url.searchParams.get('q');

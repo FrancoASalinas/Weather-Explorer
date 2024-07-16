@@ -1,4 +1,3 @@
-import App from '../App';
 import { error, nav, map } from '../contents/App';
 import { input as appInput, button as appButton } from '../contents/Searchbar';
 import { loadingIndicator } from '../contents/LoadingIndicator';
@@ -9,11 +8,17 @@ import { server } from '../mocks/mockServer';
 import locationDataMock from '../mocks/locationDataMock';
 import weatherDataMock from '../mocks/weatherDataMock';
 import '@testing-library/jest-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
+import routes from '../routes';
 
 function setup() {
   return {
     user: userEvent.setup(),
-    ...render(<App />),
+    ...render(
+      <BrowserRouter>
+        <Routes>{routes}</Routes>
+      </BrowserRouter>
+    ),
   };
 }
 
