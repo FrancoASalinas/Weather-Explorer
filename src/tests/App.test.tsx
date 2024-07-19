@@ -10,6 +10,7 @@ import weatherDataMock from '../mocks/weatherDataMock';
 import '@testing-library/jest-dom';
 import { BrowserRouter, Routes } from 'react-router-dom';
 import routes from '../routes';
+import userWeatherMock from '../mocks/userWeatherMock';
 
 function setup() {
   return {
@@ -279,5 +280,55 @@ describe('Navigation', () => {
 
       expect(screen.queryByTestId(map.testId)).toBeNull();
     });
+  });
+
+  describe('Current location', () => {
+    it("Should show the current city name for the user's current location", async () => {
+      setup();
+      await screen.findByText(userWeatherMock.name, {}, { timeout: 10000 });
+    });
+
+    it("Should show the current city weather for the user's current location", async () => {
+      const { weather, main, visibility, wind } = userWeatherMock;
+      setup();
+      await screen.findByText(
+        `${weather[0].main} (${weather[0].description})`,
+        {},
+        { timeout: 10000 }
+      );
+      await screen.findByText(`${main.temp}ºC`, {}, { timeout: 10000 });
+      await screen.findByText(
+        `Max: ${main.temp_max}ºC`,
+        {},
+        { timeout: 10000 }
+      );
+      await screen.findByText(
+        `Min: ${main.temp_min}ºC`,
+        {},
+        { timeout: 10000 }
+      );
+      await screen.findByText(
+        `Feels like: ${main.feels_like}ºC`,
+        {},
+        { timeout: 10000 }
+      );
+      await screen.findByText(`${main.humidity}%`, {}, { timeout: 10000 });
+      visibility &&
+        (await screen.findByText(`${visibility / 1000}km`),
+        {},
+        { timeout: 10000 });
+      await screen.findByText(
+        `Speed: ${wind.speed}m/s`,
+        {},
+        { timeout: 10000 }
+      );
+      await screen.findByText(
+        `Direction: ${wind.deg}º`,
+        {},
+        { timeout: 10000 }
+      );
+    });
+    2;
+
   });
 });

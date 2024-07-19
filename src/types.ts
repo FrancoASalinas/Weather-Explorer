@@ -41,4 +41,9 @@ type Location = {
   state: string;
 };
 
-export { type WeatherData, type Location };
+type UserLocationData = {
+  latitude: number;
+  longitude: number;
+};
+
+export { type WeatherData, type Location, type UserLocationData };
