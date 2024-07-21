@@ -8,6 +8,7 @@
   border: none;
   list-style-type: none;
   font-family: var(--font-text);
+  text-decoration: none;
 }
 
 @font-face {
@@ -206,6 +207,7 @@
 .header__nav__link--active {
   font-size: var(--font-size-4);
   font-family: var(--font-headline);
+  color: var(--primary-900);
 }
 
 .header__nav__link--active {
@@ -214,6 +216,7 @@
 
 .header__nav--wide {
   position: absolute;
+  gap: var(--size-4);
   padding: var(--size-1);
   left: 0;
   top: 50%;
@@ -334,7 +337,7 @@
 
 @media only screen and (min-width: 767px) {
   .header__nav--wide {
-    display: block;
+    display: flex;
   }
 
   .header__bars,

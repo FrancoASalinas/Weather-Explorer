@@ -12,9 +12,15 @@ type Props = {
 function Header({ onSearch, onChange, inputValue }: Props) {
   const [toggleNav, setToggleNav] = useState(false);
 
-  const NavLinks = () => (
+  const CustomNavLink = ({
+    to,
+    children,
+  }: {
+    to: string;
+    children: React.ReactNode | string;
+  }) => (
     <NavLink
-      to='/map'
+      to={to}
       className={({ isActive }) =>
         isActive ? 'header__nav__link--active' : 'header__nav__link'
       }
@@ -22,8 +28,15 @@ function Header({ onSearch, onChange, inputValue }: Props) {
         setToggleNav(false);
       }}
     >
-      {nav.map.text}
+      {children}
     </NavLink>
+  );
+
+  const NavLinks = () => (
+    <>
+      <CustomNavLink to='/map'>{nav.map.text}</CustomNavLink>
+      <CustomNavLink to='/'>{nav.currentLocation.text}</CustomNavLink>
+    </>
   );
 
   return (

@@ -13,11 +13,11 @@ import { MemoryRouter, Routes } from 'react-router-dom';
 import routes from '../routes';
 import userWeatherMock from '../mocks/userWeatherMock';
 
-function setup() {
+function setup(route?: string) {
   return {
     user: userEvent.setup(),
     ...render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={[route ? route : '/']}>
         <Routes>{routes}</Routes>
       </MemoryRouter>
     ),
@@ -292,6 +292,20 @@ describe('Navigation', () => {
   });
 
   describe('Current location', () => {
+    it(`Should render nav link: ${nav.currentLocation.text}`, async () => {
+      setup();
+      expect(
+        (await screen.findAllByText(nav.currentLocation.text)).length
+      ).toBeGreaterThan(0);
+    });
+
+    it(`Clicking the link should get user to the current location weather`, async () => {
+      const { user } = setup('/map');
+      await user.click((await screen.findAllByText(nav.currentLocation.text))[0]);
+
+      await screen.findAllByText(userWeatherMock.name, {}, {timeout: 10000});
+    });
+
     it("Should show the current city name for the user's current location", async () => {
       setup();
       await screen.findByText(userWeatherMock.name, {}, { timeout: 10000 });

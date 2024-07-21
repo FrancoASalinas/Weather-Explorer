@@ -1,7 +1,10 @@
 const nav = {
-    map: {
-      text: 'Interactive Map'
-    }
-  }
+  map: {
+    text: 'Interactive Map',
+  },
+  currentLocation: {
+    text: 'My Location',
+  },
+};
 
-  export {nav}
+export { nav };

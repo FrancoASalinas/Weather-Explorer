@@ -34,9 +34,3 @@ describe('/search?q=london', () => {
     await screen.findAllByText(/London/, {}, {timeout: 10000});
   }, 11000);
 })
-
-// describe('/')
-// it('Should render interactive map', async () => {
-//   setup('/map');
-//   await screen.findByTestId(map.testId);
-// });
