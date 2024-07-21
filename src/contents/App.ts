@@ -4,14 +4,4 @@ const error = {
   noInput: 'Please type something in the input',
 };
 
-
-const nav = {
-  map: {
-    text: 'Interactive Map'
-  }
-}
-
-const map = {
-  testId: 'interactive-map'
-}
-export { error, nav, map };
+export { error };

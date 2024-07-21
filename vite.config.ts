@@ -8,7 +8,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    testTimeout: 10000
+    testTimeout: 10000,
+    setupFiles: 'src/tests/setup.ts',
   },
-  base: '/Weather-Explorer/'
+  base: '/Weather-Explorer/',
 });

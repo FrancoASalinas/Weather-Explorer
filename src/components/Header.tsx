@@ -1,35 +1,29 @@
 import React, { useState } from 'react';
-import { nav } from '../contents/App';
+import { nav } from '../contents/Header';
 import SearchBar from './Searchbar';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   onSearch: () => void;
-  toggleMap: boolean;
-  onLinkClick: () => void;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   inputValue: string;
 };
 
-function Header({
-  onSearch,
-  toggleMap,
-  onLinkClick,
-  onChange,
-  inputValue,
-}: Props) {
-  
+function Header({ onSearch, onChange, inputValue }: Props) {
   const [toggleNav, setToggleNav] = useState(false);
 
   const NavLinks = () => (
-    <a
-      className={toggleMap ? 'header__nav__link--active' : 'header__nav__link'}
+    <NavLink
+      to='/map'
+      className={({ isActive }) =>
+        isActive ? 'header__nav__link--active' : 'header__nav__link'
+      }
       onClick={() => {
-        onLinkClick();
         setToggleNav(false);
       }}
     >
       {nav.map.text}
-    </a>
+    </NavLink>
   );
 
   return (

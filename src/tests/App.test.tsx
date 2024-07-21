@@ -1,14 +1,15 @@
-import { error, nav, map } from '../contents/App';
+import { error } from '../contents/App';
+import { map } from '../contents/InteractiveMap';
+import { nav } from '../contents/Header';
 import { input as appInput, button as appButton } from '../contents/Searchbar';
 import { loadingIndicator } from '../contents/LoadingIndicator';
 import { showWeatherButton } from '../contents/Location';
 import { render, screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
-import { server } from '../mocks/mockServer';
 import locationDataMock from '../mocks/locationDataMock';
 import weatherDataMock from '../mocks/weatherDataMock';
 import '@testing-library/jest-dom';
-import { BrowserRouter, Routes } from 'react-router-dom';
+import { MemoryRouter, Routes } from 'react-router-dom';
 import routes from '../routes';
 import userWeatherMock from '../mocks/userWeatherMock';
 
@@ -16,9 +17,9 @@ function setup() {
   return {
     user: userEvent.setup(),
     ...render(
-      <BrowserRouter>
+      <MemoryRouter initialEntries={['/']}>
         <Routes>{routes}</Routes>
-      </BrowserRouter>
+      </MemoryRouter>
     ),
   };
 }
@@ -41,8 +42,6 @@ async function clickMapLink(user: UserEvent) {
   const link = screen.getAllByText(nav.map.text)[0];
   await user.click(link);
 }
-
-beforeAll(() => server.listen());
 
 it(`Should render an input with placeholder ${appInput.placeholder}`, () => {
   setup();
@@ -67,14 +66,9 @@ describe('Search button', () => {
   });
 });
 describe('Searching', () => {
-  it(`Should render '${error.unexpected}' if there is an unexpected error fetching results`, async () => {
-    const { user } = setup();
-    await searchLocation(user, '!!!');
-    await screen.findByText(error.unexpected);
-  });
-
   it(`Should render ${error.noCity} if the city does not exist`, async () => {
     const { user } = setup();
+    console.log('search');
     await searchLocation(user, 'nonexistent');
 
     await screen.findByText(error.noCity);
@@ -84,6 +78,12 @@ describe('Searching', () => {
     const { user } = setup();
     await searchLocation(user, 'london');
     await screen.findByTestId(loadingIndicator.testid);
+  });
+
+  it(`Should render '${error.unexpected}' if there is an unexpected error fetching results`, async () => {
+    const { user } = setup();
+    await searchLocation(user, '!!!');
+    await screen.findByText(error.unexpected);
   });
 
   it.each(locationDataMock)(
@@ -266,19 +266,29 @@ describe('Navigation', () => {
 
       await clickMapLink(user);
 
-      await screen.findByTestId(map.testId);
-    });
+      await screen.findByTestId(map.testId, {}, { timeout: 10000 });
+    }, 11000);
 
     it('Should stop showing the interactive map if the user searches for a location', async () => {
       const { user } = setup();
 
       await clickMapLink(user);
 
-      await screen.findByTestId(map.testId);
+      await screen.findByTestId(map.testId, {}, { timeout: 10000 });
 
       await searchLocation(user, 'london');
 
       expect(screen.queryByTestId(map.testId)).toBeNull();
+    });
+
+    it('Should not show any search result when navigating to the map', async () => {
+      const { user } = setup();
+      await searchLocation(user, 'london');
+      await screen.findAllByText(/London/);
+
+      await clickMapLink(user);
+
+      expect(screen.queryAllByText(/London/)).toHaveLength(0);
     });
   });
 
@@ -329,6 +339,5 @@ describe('Navigation', () => {
       );
     });
     2;
-
   });
 });

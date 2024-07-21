@@ -1,37 +1,54 @@
+import { useEffect, useState } from 'react';
 import { Location as LocationType } from '../types';
 import LoadingIndicator from './LoadingIndicator';
 import Location from './Location';
+import { useSearchParams } from 'react-router-dom';
+import API_KEY from '../API_KEY';
+import { error } from '../contents/App';
 
-type Props = {
-  isLoading: boolean;
-  unexpectedError: boolean;
-  isSearched: boolean;
-  locationArray: LocationType[];
-  error: { [key: string]: string };
-};
+export default function Locations() {
+  const [locationArray, setLocationArray] = useState<LocationType[]>([]);
+  const [unexpectedError, setUnexpectedError] = useState(false);
+  const [isSearched, setIsSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchParams] = useSearchParams();
 
-export default function Locations({
-  error,
-  isLoading,
-  isSearched,
-  locationArray,
-  unexpectedError,
-}: Props) {
+  const searchInput = searchParams.get('q');
+
+  useEffect(() => {
+    fetch(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${searchInput}&limit=5&appid=${API_KEY}`
+    )
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        setUnexpectedError(true);
+      })
+      .then((data: LocationType[]) => {
+        console.log('data: ', data);
+        data && setLocationArray(data);
+      })
+      .then(() => {
+        setIsSearched(true);
+        setIsLoading(false);
+      })
+      .catch(error => console.error(error));
+  }, [searchInput]);
+
   if (isLoading) {
     return <LoadingIndicator />;
-  }
-  if (unexpectedError) {
+  } else if (unexpectedError) {
     return <>{error.unexpected}</>;
-  }
-  if (isSearched && locationArray.length === 0) {
+  } else if (isSearched && locationArray.length === 0) {
     return <>{error.noCity}</>;
+  } else if (isSearched) {
+    return (
+      <ul className='location-search__locations'>
+        {locationArray.map(location => (
+          <Location key={location.lat + location.lon} location={location} />
+        ))}
+      </ul>
+    );
   }
-
-  return (
-    <ul className='location-search__locations'>
-      {locationArray.map(location => (
-        <Location key={location.lat + location.lon} location={location} />
-      ))}
-    </ul>
-  );
 }
