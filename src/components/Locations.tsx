@@ -26,7 +26,6 @@ export default function Locations() {
         setUnexpectedError(true);
       })
       .then((data: LocationType[]) => {
-        console.log('data: ', data);
         data && setLocationArray(data);
       })
       .then(() => {

@@ -68,7 +68,6 @@ describe('Search button', () => {
 describe('Searching', () => {
   it(`Should render ${error.noCity} if the city does not exist`, async () => {
     const { user } = setup();
-    console.log('search');
     await searchLocation(user, 'nonexistent');
 
     await screen.findByText(error.noCity);

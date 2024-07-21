@@ -11,8 +11,6 @@ export const handlers = [
       const url = new URL(request.url);
       const city = url.searchParams.get('q');
 
-      console.log('city', city)
-
       await delay(1000);
 
       if (city === 'london') {
