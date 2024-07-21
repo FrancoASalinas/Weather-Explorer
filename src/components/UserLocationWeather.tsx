@@ -29,7 +29,7 @@ function UserLocationWeather() {
     async function fetchUserWeather() {
       userLocationData &&
         (await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${userLocationData.latitude}&lon=${userLocationData.longitude}&appid=${API_KEY}`
+          `https://api.openweathermap.org/data/2.5/weather?lat=${userLocationData.latitude}&lon=${userLocationData.longitude}&appid=${API_KEY}&units=metric`
         )
           .then(res => res.json())
           .then(data => setUserWeatherData(data))
