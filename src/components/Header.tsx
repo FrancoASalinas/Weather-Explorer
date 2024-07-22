@@ -3,13 +3,7 @@ import { nav } from '../contents/Header';
 import SearchBar from './Searchbar';
 import { NavLink } from 'react-router-dom';
 
-type Props = {
-  onSearch: () => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputValue: string;
-};
-
-function Header({ onSearch, onChange, inputValue }: Props) {
+function Header() {
   const [toggleNav, setToggleNav] = useState(false);
 
   const CustomNavLink = ({
@@ -59,7 +53,7 @@ function Header({ onSearch, onChange, inputValue }: Props) {
       >
         <NavLinks />
       </nav>
-      <SearchBar onClick={onSearch} onChange={onChange} value={inputValue} />
+      <SearchBar />
     </header>
   );
 }
