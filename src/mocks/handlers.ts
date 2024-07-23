@@ -44,7 +44,7 @@ export const handlers = [
     }
   ),
 
-  http.get('https://ifconfig.co/json', async () => {
+  http.get('https://ipapi.co/json/', async () => {
     await delay(300);
     return HttpResponse.json(userLocationMock);
   }),

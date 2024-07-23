@@ -9,9 +9,7 @@ function UserLocationWeather() {
 
   useEffect(() => {
     async function fetchUserLocation() {
-      await fetch('https://ifconfig.co/json', {
-        mode: 'cors',
-      })
+      await fetch('https://ipapi.co/json/')
         .then(res => res.json())
         .then(data => {
           setUserLocationData({
