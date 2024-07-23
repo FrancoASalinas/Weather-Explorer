@@ -13,6 +13,12 @@ const mock: WeatherData[] = [
         description: 'overcast clouds',
         icon: '04n',
       },
+      {
+        id: 500,
+        main: 'Rain',
+        description: 'light rain',
+        icon: '10n',
+      },
     ],
     base: 'stations',
     main: {

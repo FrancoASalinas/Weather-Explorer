@@ -12,6 +12,12 @@ const data: WeatherData = {
       description: 'clear sky',
       icon: '01n',
     },
+    {
+      id: 500,
+      main: 'Rain',
+      description: 'light rain',
+      icon: '10n',
+    },
   ],
   base: 'stations',
   main: {

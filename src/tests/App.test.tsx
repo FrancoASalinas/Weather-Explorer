@@ -12,6 +12,8 @@ import '@testing-library/jest-dom';
 import { MemoryRouter, Routes } from 'react-router-dom';
 import routes from '../routes';
 import userWeatherMock from '../mocks/userWeatherMock';
+import { WeatherData } from '../types';
+import { testId } from '../components/UserLocationWeather';
 
 function setup(route?: string) {
   return {
@@ -41,6 +43,39 @@ function getSearchButton() {
 async function clickMapLink(user: UserEvent) {
   const link = screen.getAllByText(nav.map.text)[0];
   await user.click(link);
+}
+
+async function assertLocationWeather(
+  weatherData: WeatherData,
+  location: HTMLElement
+) {
+  const { weather, main, visibility, wind } = weatherData;
+  const entries = [
+    `Temperature`,
+    `${main.temp}ºC`,
+    `Max: ${main.temp_max}ºC`,
+    `Min: ${main.temp_min}ºC`,
+    `Feels like: ${main.feels_like}ºC`,
+    'Humidity',
+    `${main.humidity}%`,
+    'Wind',
+    `Speed: ${wind.speed}m/s`,
+    `Direction: ${wind.deg}º`,
+  ];
+
+  for (let entry of entries) {
+    await within(location).findByText(entry);
+  }
+
+  weather.map(
+    async data =>
+      await within(location).findByText(`${data.main} (${data.description})`)
+  );
+
+  if (visibility) {
+    (await within(location).findByText('Visibility')) &&
+      (await within(location).findByText(`${visibility / 1000}km`));
+  }
 }
 
 it(`Should render an input with placeholder ${appInput.placeholder}`, () => {
@@ -173,32 +208,13 @@ describe("Location's weather", () => {
 
   it.each(locationWithWeatherData)(
     `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all, rain past hour: $rain.1h, snow past hour: $snow.1h`,
-    async ({ weather, main, visibility, wind, lat, lon }) => {
+    async weatherData => {
+      const { lat, lon } = weatherData;
       const { user } = setup();
 
       const location = await showLocationWeather(user, lat, lon);
 
-      await within(location).findByText(
-        `${weather[0].main} (${weather[0].description})`
-      );
-
-      await within(location).findByText(`Temperature`);
-      await within(location).findByText(`${main.temp}ºC`);
-      await within(location).findByText(`Max: ${main.temp_max}ºC`);
-      await within(location).findByText(`Min: ${main.temp_min}ºC`);
-      await within(location).findAllByText(`Feels like: ${main.feels_like}ºC`);
-
-      await within(location).findByText('Humidity');
-      await within(location).findByText(`${main.humidity}%`);
-
-      if (visibility) {
-        await within(location).findByText('Visibility');
-        await within(location).findByText(`${visibility / 1000}km`);
-      }
-
-      await within(location).findByText('Wind');
-      await within(location).findByText(`Speed: ${wind.speed}m/s`);
-      await within(location).findByText(`Direction: ${wind.deg}º`);
+      await assertLocationWeather(weatherData, location);
     }
   );
 
@@ -301,9 +317,13 @@ describe('Navigation', () => {
 
     it(`Clicking the link should get user to the current location weather`, async () => {
       const { user } = setup('/map');
-      await user.click((await screen.findAllByText(nav.currentLocation.text))[0]);
+      await user.click(
+        (
+          await screen.findAllByText(nav.currentLocation.text)
+        )[0]
+      );
 
-      await screen.findAllByText(userWeatherMock.name, {}, {timeout: 10000});
+      await screen.findAllByText(userWeatherMock.name, {}, { timeout: 10000 });
     });
 
     it("Should show the current city name for the user's current location", async () => {
@@ -312,45 +332,9 @@ describe('Navigation', () => {
     });
 
     it("Should show the current city weather for the user's current location", async () => {
-      const { weather, main, visibility, wind } = userWeatherMock;
       setup();
-      await screen.findByText(
-        `${weather[0].main} (${weather[0].description})`,
-        {},
-        { timeout: 10000 }
-      );
-      await screen.findByText(`${main.temp}ºC`, {}, { timeout: 10000 });
-      await screen.findByText(
-        `Max: ${main.temp_max}ºC`,
-        {},
-        { timeout: 10000 }
-      );
-      await screen.findByText(
-        `Min: ${main.temp_min}ºC`,
-        {},
-        { timeout: 10000 }
-      );
-      await screen.findByText(
-        `Feels like: ${main.feels_like}ºC`,
-        {},
-        { timeout: 10000 }
-      );
-      await screen.findByText(`${main.humidity}%`, {}, { timeout: 10000 });
-      visibility &&
-        (await screen.findByText(`${visibility / 1000}km`),
-        {},
-        { timeout: 10000 });
-      await screen.findByText(
-        `Speed: ${wind.speed}m/s`,
-        {},
-        { timeout: 10000 }
-      );
-      await screen.findByText(
-        `Direction: ${wind.deg}º`,
-        {},
-        { timeout: 10000 }
-      );
+      const location = await screen.findByTestId(testId, {}, { timeout: 9000 });
+      await assertLocationWeather(userWeatherMock, location);
     });
-    2;
   });
 });
