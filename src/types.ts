@@ -46,4 +46,12 @@ type UserLocationData = {
   longitude: number;
 };
 
-export { type WeatherData, type Location, type UserLocationData };
+type Layer = {
+  name: string;
+  urlString: string;
+  unit: string;
+  metrics: number[];
+  id: string;
+};
+
+export { type WeatherData, type Location, type UserLocationData, type Layer };

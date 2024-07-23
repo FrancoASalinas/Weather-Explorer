@@ -297,16 +297,26 @@
   height: var(--size-4);
   position: absolute;
   z-index: 500;
-  bottom: var(--size-5);
+  bottom: var(--size-6);
   left: var(--size-5);
   font: var(--font-headline);
   font-size: var(--font-size-1);
   font-weight: 600;
 }
 
-.map-container__legend__bar {
+.map-container__legend__bar--temp,
+.map-container__legend__bar--clouds,
+.map-container__legend__bar--rain,
+.map-container__legend__bar--pressure,
+.map-container__legend__bar--wind {
   width: 100%;
   height: 100%;
+  border-radius: var(--size-2);
+  border: 1px solid var(--primary-100);
+  box-shadow: 0 0 4px var(--primary-700);
+}
+
+.map-container__legend__bar--temp {
   background: linear-gradient(
     to right,
     rgba(130, 22, 146, 1),
@@ -319,11 +329,61 @@
     rgba(255, 194, 40, 1),
     rgba(252, 128, 20, 1)
   );
-  border-radius: var(--size-2);
-  border: 1px solid var(--primary-100);
-  box-shadow: 0 0 4px var(--primary-700);
 }
-
+.map-container__legend__bar--clouds {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(253, 253, 255, 0.1),
+    rgba(252, 251, 255, 0.2),
+    rgba(250, 250, 255, 0.3),
+    rgba(249, 248, 255, 0.4),
+    rgba(247, 247, 255, 0.5),
+    rgba(246, 245, 255, 0.75),
+    rgba(244, 244, 255, 1),
+    rgba(243, 242, 255, 1),
+    rgba(242, 241, 255, 1),
+    rgba(240, 240, 255, 1)
+  );
+}
+.map-container__legend__bar--rain {
+  background: linear-gradient(
+    to right,
+    rgba(225, 200, 100, 0),
+    rgba(200, 150, 150, 0),
+    rgba(150, 150, 170, 0),
+    rgba(120, 120, 190, 0),
+    rgba(110, 110, 205, 0.3),
+    rgba(80, 80, 225, 0.7),
+    rgba(20, 20, 255, 0.9)
+  );
+}
+.map-container__legend__bar--pressure {
+  background: linear-gradient(
+    to right,
+    rgba(0, 115, 255, 1),
+    rgba(0, 170, 255, 1),
+    rgba(75, 208, 214, 1),
+    rgba(141, 231, 199, 1),
+    rgba(176, 247, 32, 1),
+    rgba(240, 184, 0, 1),
+    rgba(251, 85, 21, 1),
+    rgba(243, 54, 59, 1),
+    rgba(198, 0, 0, 1)
+  );
+}
+.map-container__legend__bar--wind {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(238, 206, 206, 0.4),
+    rgba(179, 100, 188, 0.7),
+    rgba(63, 33, 59, 0.8),
+    rgba(116, 76, 172, 0.9),
+    rgba(70, 0, 175, 1),
+    rgba(13, 17, 38, 1)
+  );
+}
 .map-container__legend__metrics {
   position: absolute;
   transform: translateX(-50%);
@@ -341,11 +401,87 @@
   width: var(--size-4);
 }
 
-.map-container__legend__metric-type {
+.map-container__legend__metric-unit {
   position: absolute;
   right: -20px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.map-container__side-panel--active,
+.map-container__side-panel--unactive {
+  position: absolute;
+  display: flex;
+  right: 0;
+  top: 0;
+  width: 50%;
+  max-width: var(--size-12);
+  height: 100%;
+  z-index: 500;
+  background-color: var(--primary-500);
+  transition: 300ms ease-in-out;
+  flex-direction: column;
+  gap: var(--size-4);
+  padding: var(--size-3);
+  align-items: center;
+  color: var(--primary-100);
+  border-left: 1px solid var(--primary-600);
+  cursor: default
+}
+
+.side-panel__title {
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-headline);
+  font-size: var(--font-size-5);
+}
+
+.side-panel__select-layer {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--size-4);
+  width: var(--size-10);
+  font-size: var(--font-size-2);
+  cursor: pointer;
+}
+
+.side-panel__select-layer__layer-name {
+  width: var(--size-10);
+}
+
+.map-container__side-panel--unactive {
+  transform: translateX(100%);
+}
+
+.map-container__side-panel--active {
+  transform: translateX(0);
+}
+
+.side-panel__toggle {
+  position: absolute;
+  width: var(--size-3);
+  height: var(--size-6);
+  background-color: inherit;
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  border-top-left-radius: var(--size-1);
+  border-bottom-left-radius: var(--size-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.toggle, .toggle--active {
+  width: var(--size-2);
+  height: auto;
+  transition: 300ms;
+  transform: rotate(0)
+}
+
+.toggle--active {
+  transform: rotate(180deg)
 }
 
 .loader {
