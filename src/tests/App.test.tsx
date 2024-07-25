@@ -4,7 +4,7 @@ import { nav } from '../contents/Header';
 import { input as appInput, button as appButton } from '../contents/Searchbar';
 import { loadingIndicator } from '../contents/LoadingIndicator';
 import { showWeatherButton } from '../contents/Location';
-import { findByTestId, render, screen, within } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent, { UserEvent } from '@testing-library/user-event';
 import locationDataMock from '../mocks/locationDataMock';
 import weatherDataMock from '../mocks/weatherDataMock';
@@ -45,9 +45,7 @@ async function clickMapLink(user: UserEvent) {
   await user.click(link);
 }
 
-async function assertLocationWeather(
-  weatherData: WeatherData,
-) {
+async function assertLocationWeather(weatherData: WeatherData) {
   const location = await screen.findByTestId(testId);
   const { weather, main, visibility, wind } = weatherData;
   const entries = [
@@ -211,8 +209,7 @@ describe("Location's weather", () => {
     async weatherData => {
       const { lat, lon } = weatherData;
       const { user } = setup();
-
-      const location = await showLocationWeather(user, lat, lon);
+      await showLocationWeather(user, lat, lon);
 
       await assertLocationWeather(weatherData);
     }
@@ -333,7 +330,6 @@ describe('Navigation', () => {
 
     it("Should show the current city weather for the user's current location", async () => {
       setup();
-      const location = await screen.findByTestId(testId, {}, { timeout: 9000 });
       await assertLocationWeather(userWeatherMock);
     });
   });
