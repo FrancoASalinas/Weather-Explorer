@@ -9,7 +9,7 @@ import userEvent, { UserEvent } from '@testing-library/user-event';
 import locationDataMock from '../mocks/locationDataMock';
 import weatherDataMock from '../mocks/weatherDataMock';
 import '@testing-library/jest-dom';
-import { MemoryRouter, Routes } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import routes from '../routes';
 import userWeatherMock from '../mocks/userWeatherMock';
 import { WeatherData } from '../types';
@@ -20,7 +20,7 @@ function setup(route?: string) {
     user: userEvent.setup(),
     ...render(
       <MemoryRouter initialEntries={[route ? route : '/']}>
-        <Routes>{routes}</Routes>
+        {routes}
       </MemoryRouter>
     ),
   };

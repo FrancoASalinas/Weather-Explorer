@@ -62,7 +62,6 @@ export default function LocationWeather({
 
     const backgroundImage = getBackgroundImage();
 
-    //change classes
     return (
       <div className={className} data-testid={testId}>
         {backgroundImage && (
@@ -73,12 +72,10 @@ export default function LocationWeather({
           </>
         )}
         {title && (
-          <h3 className='user-city-name weather__data-item'>
-            {title}
-          </h3>
+          <h3 className='user-city-name weather__data-item'>{title}</h3>
         )}
         {weather.map(data => (
-          <li className='weather__data-item'>
+          <li key={data.id} className='weather__data-item'>
             <span>
               {data.main} ({data.description})
             </span>

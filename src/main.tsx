@@ -1,16 +1,10 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  RouterProvider,
+  HashRouter,
 } from 'react-router-dom';
 import routes from './routes.tsx';
 
-const router = createBrowserRouter(createRoutesFromElements(routes), {
-  basename: '/Weather-Explorer',
-});
+const router = <HashRouter>{routes}</HashRouter>;
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />
-);
+ReactDOM.createRoot(document.getElementById('root')!).render(router);
