@@ -3,8 +3,6 @@ import { UserLocationData, WeatherData } from '../types';
 import LocationWeather from './LocationWeather';
 import API_KEY from '../API_KEY';
 
-export const testId = 'user-location';
-
 function UserLocationWeather() {
   const [userLocationData, setUserLocationData] = useState<UserLocationData>();
   const [userWeatherData, setUserWeatherData] = useState<WeatherData>();
@@ -43,11 +41,13 @@ function UserLocationWeather() {
 
   return (
     <>
-      <h3 className='user-city-name'>{userWeatherData?.name}</h3>
       {userWeatherData ? (
-        <div className='user-city-container' data-testid={testId}>
-          <LocationWeather isToggle={true} currentWeather={userWeatherData} />
-        </div>
+        <LocationWeather
+          isToggle={true}
+          className='weather--user'
+          currentWeather={userWeatherData}
+          title={userWeatherData?.name}
+        />
       ) : (
         'loading'
       )}

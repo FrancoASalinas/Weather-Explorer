@@ -24,7 +24,7 @@ type WeatherData = {
   clouds: { all: number };
   rain?: { '1h'?: number; '3h'?: number };
   snow?: { '1h'?: number; '3h'?: number };
-  dt: any;
+  dt: number;
   timezone: any;
   id: any;
   name: any;

@@ -27,23 +27,20 @@ export default function Location({ location }: { location: LocationType }) {
   }
 
   return (
-    <div
-      data-testid={lat + lon}
-      className='location-search__locations__location'
-    >
+    <div data-testid={lat + lon} className={isLoading ? 'locations__location--loading' :'locations__location'}>
       <div
-        className={`location-search__locations__location__main ${
-          isToggle && 'location-search__locations__location__main--toggle'
+        className={`locations__location__main ${
+          isToggle && 'locations__location__main--toggle'
         }`}
       >
-        <div className='location-search__locations__location__name'>
+        <div className='locations__location__name'>
           <span>
             {name}, {country}
           </span>
           {state && <span>{state}</span>}
         </div>
         <button
-          className='location-search__locations__location__button'
+          className='locations__location__button'
           onClick={handleLocationClick}
           data-testid={showWeatherButton.testid}
         >
@@ -54,9 +51,11 @@ export default function Location({ location }: { location: LocationType }) {
         isLoading ? (
           <LoadingIndicator />
         ) : (
-          <ul className='location-search__locations__location__weather'>
-            <LocationWeather isToggle={isToggle} currentWeather={weatherData} />
-          </ul>
+          <LocationWeather
+            className='weather--location'
+            isToggle={isToggle}
+            currentWeather={weatherData}
+          />
         )
       ) : undefined}
     </div>

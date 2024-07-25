@@ -43,7 +43,7 @@ export default function Locations() {
     return <>{error.noCity}</>;
   } else if (isSearched) {
     return (
-      <ul className='location-search__locations'>
+      <ul className='locations'>
         {locationArray.map(location => (
           <Location key={location.lat + location.lon} location={location} />
         ))}

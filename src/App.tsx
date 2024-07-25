@@ -5,7 +5,7 @@ function App() {
   return (
     <>
       <Header />
-      <main className='location-search'>
+      <main className='main-content'>
         <Outlet />
       </main>
     </>
