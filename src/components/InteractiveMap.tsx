@@ -47,14 +47,20 @@ function InteractiveMap() {
   }, [layer, map]);
 
   return (
-    <div data-testid={mapContent.testId} className='map-container' id='map'>
-      <Legend layer={layer} />
-      <SidePanel
-        layer={layer}
-        onChange={e =>
-          setLayer(layers.filter(layer => layer.name === e.target.value)[0])
-        }
-      />
+    <div className='map-wrapper'>
+      <div
+        data-testid={mapContent.testId}
+        className='map-wrapper__map-container'
+        id='map'
+      >
+        <Legend layer={layer} />
+        <SidePanel
+          layer={layer}
+          onChange={e =>
+            setLayer(layers.filter(layer => layer.name === e.target.value)[0])
+          }
+        />
+      </div>
     </div>
   );
 }

@@ -65,14 +65,15 @@
 #root {
   background-color: var(--primary-300);
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
+  overflow-y: auto;
 }
 
 .main-content {
   width: 100%;
-  height: 100vh;
-  padding: var(--size-8) var(--size-4);
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -80,6 +81,7 @@
   align-items: center;
   z-index: 10;
   position: relative;
+  padding-top: var(--size-7)
 }
 
 .locations {
@@ -326,11 +328,17 @@
   cursor: pointer;
 }
 
-.map-container {
+.map-wrapper {
+width: 100%;
+height: 100%;
+}
+
+.map-wrapper__map-container {
   height: 100%;
   width: 100%;
   z-index: 100;
   min-width: 300px;
+  position: relative;
 }
 
 .map-container__legend {
