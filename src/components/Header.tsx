@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { nav } from '../contents/Header';
 import SearchBar from './Searchbar';
 import { NavLink } from 'react-router-dom';
+import { nav } from '../constants/Header';
 
 function Header() {
   const [toggleNav, setToggleNav] = useState(false);

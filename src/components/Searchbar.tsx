@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { button, input } from '../contents/Searchbar';
 import { useNavigate } from 'react-router-dom';
+import { input, button } from '../constants/Searchbar';
 
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState('');

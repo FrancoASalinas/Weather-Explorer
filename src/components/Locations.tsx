@@ -3,8 +3,8 @@ import { Location as LocationType } from '../types';
 import LoadingIndicator from './LoadingIndicator';
 import Location from './Location';
 import { useSearchParams } from 'react-router-dom';
-import API_KEY from '../API_KEY';
-import { error } from '../contents/App';
+import API_KEY from '../utils/API_KEY';
+import { error } from '../constants/Locations';
 
 export default function Locations() {
   const [locationArray, setLocationArray] = useState<LocationType[]>([]);

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Location as LocationType, WeatherData } from '../types';
-import { showWeatherButton } from '../contents/Location';
 import LoadingIndicator from './LoadingIndicator';
-import API_KEY from '../API_KEY';
+import API_KEY from '../utils/API_KEY';
 import LocationWeather from './LocationWeather';
+import { showWeatherButton } from '../constants/Location';
 
-export default function Location({ location }: { location: LocationType }) {
+function Location({ location }: { location: LocationType }) {
   const { lat, lon, name, country, state } = location;
   const [isLoading, setIsLoading] = useState(false);
   const [isToggle, setIsToggle] = useState(false);
@@ -27,7 +27,12 @@ export default function Location({ location }: { location: LocationType }) {
   }
 
   return (
-    <div data-testid={lat + lon} className={isLoading ? 'locations__location--loading' :'locations__location'}>
+    <div
+      data-testid={lat + lon}
+      className={
+        isLoading ? 'locations__location--loading' : 'locations__location'
+      }
+    >
       <div
         className={`locations__location__main ${
           isToggle && 'locations__location__main--toggle'
@@ -55,9 +60,13 @@ export default function Location({ location }: { location: LocationType }) {
             className='weather--location'
             isToggle={isToggle}
             currentWeather={weatherData}
+            lat={lat}
+            lon={lon}
           />
         )
       ) : undefined}
     </div>
   );
 }
+
+export default Location;

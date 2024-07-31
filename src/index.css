@@ -9,6 +9,7 @@
   list-style-type: none;
   font-family: var(--font-text);
   text-decoration: none;
+  list-style: none;
 }
 
 @font-face {
@@ -216,6 +217,52 @@
   display: block;
   width: 100%;
   text-align: center;
+}
+
+.weather__history-link {
+  z-index: 100;
+  color: var(--primary-900);
+  background-color: var(--primary-500);
+  padding: var(--size-3);
+  border-radius: var(--size-1);
+  box-shadow: 0 0 3px var(--primary-900);
+  text-shadow: none;
+  font-size: var(--font-size-4);
+  font-weight: 600;
+}
+
+.history {
+  width: 100%;
+  padding-top: var(--size-4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: var(--size-14);
+  margin-top: var(--size-4);
+}
+
+.history__day {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  padding: var(--size-4);
+  margin: var(--size-2) 0;
+  gap: var(--size-1);
+  border-bottom: 1px solid var(--primary-700);
+}
+
+.history__day:first-of-type {
+  border-top: 1px solid var(--primary-700);
+}
+
+.history__title {
+  font-family: var(--font-headline);
+  font-size: var(--font-size-7);
+}
+
+.history__day__date {
+  font-size: var(--font-size-5);
 }
 
 .header {
@@ -528,7 +575,6 @@
 .custom-radio-button::after {
   opacity: 0;
   transition: 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
-  
 }
 
 .radio-button:checked ~ .custom-radio-button::after {

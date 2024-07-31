@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { UserLocationData, WeatherData } from '../types';
 import LocationWeather from './LocationWeather';
-import API_KEY from '../API_KEY';
+import API_KEY from '../utils/API_KEY';
 
 function UserLocationWeather() {
   const [userLocationData, setUserLocationData] = useState<UserLocationData>();
@@ -41,8 +41,10 @@ function UserLocationWeather() {
 
   return (
     <>
-      {userWeatherData ? (
+      {userWeatherData && userLocationData ? (
         <LocationWeather
+          lat={userLocationData.latitude}
+          lon={userLocationData.longitude}
           isToggle={true}
           className='weather--user'
           currentWeather={userWeatherData}

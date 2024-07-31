@@ -1,30 +1,16 @@
-import { error } from '../contents/App';
-import { map } from '../contents/InteractiveMap';
-import { nav } from '../contents/Header';
-import { input as appInput, button as appButton } from '../contents/Searchbar';
-import { loadingIndicator } from '../contents/LoadingIndicator';
-import { showWeatherButton } from '../contents/Location';
-import { render, screen, within } from '@testing-library/react';
-import userEvent, { UserEvent } from '@testing-library/user-event';
+import { error } from '../constants/Locations';
+import { mapContent } from '../constants/InteractiveMap';
+import { nav } from '../constants/Header';
+import { input as appInput, button as appButton } from '../constants/Searchbar';
+import { loadingIndicator } from '../constants/LoadingIndicator';
+import { showWeatherButton } from '../constants/Location';
+import { screen, within } from '@testing-library/react';
+import { UserEvent } from '@testing-library/user-event';
 import locationDataMock from '../mocks/locationDataMock';
 import weatherDataMock from '../mocks/weatherDataMock';
 import '@testing-library/jest-dom';
-import { MemoryRouter } from 'react-router-dom';
-import routes from '../routes';
-import userWeatherMock from '../mocks/userWeatherMock';
-import { WeatherData } from '../types';
-import { testId } from '../components/LocationWeather';
-
-function setup(route?: string) {
-  return {
-    user: userEvent.setup(),
-    ...render(
-      <MemoryRouter initialEntries={[route ? route : '/']}>
-        {routes}
-      </MemoryRouter>
-    ),
-  };
-}
+import setup from './routerSetup';
+import assertLocationWeather from './utils/assertLocationWeather';
 
 async function typeOnInput(user: UserEvent, input: string) {
   await user.type(screen.getByPlaceholderText(appInput.placeholder), input);
@@ -43,37 +29,6 @@ function getSearchButton() {
 async function clickMapLink(user: UserEvent) {
   const link = screen.getAllByText(nav.map.text)[0];
   await user.click(link);
-}
-
-async function assertLocationWeather(weatherData: WeatherData) {
-  const location = await screen.findByTestId(testId);
-  const { weather, main, visibility, wind } = weatherData;
-  const entries = [
-    `Temperature`,
-    `${main.temp}ºC`,
-    `Max: ${main.temp_max}ºC`,
-    `Min: ${main.temp_min}ºC`,
-    `Feels like: ${main.feels_like}ºC`,
-    'Humidity',
-    `${main.humidity}%`,
-    'Wind',
-    `Speed: ${wind.speed}m/s`,
-    `Direction: ${wind.deg}º`,
-  ];
-
-  for (let entry of entries) {
-    await within(location).findByText(entry);
-  }
-
-  weather.map(
-    async data =>
-      await within(location).findByText(`${data.main} (${data.description})`)
-  );
-
-  if (visibility) {
-    (await within(location).findByText('Visibility')) &&
-      (await within(location).findByText(`${visibility / 1000}km`));
-  }
 }
 
 it(`Should render an input with placeholder ${appInput.placeholder}`, () => {
@@ -125,7 +80,7 @@ describe('Searching', () => {
 
       await searchLocation(user, 'london');
 
-      for (let [key, entry] of Object.entries(data)) {
+      for (const [key, entry] of Object.entries(data)) {
         key !== 'local_names' &&
           key !== 'lat' &&
           key !== 'lon' &&
@@ -256,7 +211,7 @@ describe("Location's weather", () => {
 
 describe('Navigation', () => {
   describe('Interactive Map', () => {
-    it(`Should render \'${nav.map.text}\'`, () => {
+    it(`Should render '${nav.map.text}'`, () => {
       setup();
       screen.getAllByText(nav.map.text);
     });
@@ -278,7 +233,7 @@ describe('Navigation', () => {
 
       await clickMapLink(user);
 
-      await screen.findByTestId(map.testId, {}, { timeout: 10000 });
+      await screen.findByTestId(mapContent.testId, {}, { timeout: 10000 });
     }, 11000);
 
     it('Should stop showing the interactive map if the user searches for a location', async () => {
@@ -286,11 +241,11 @@ describe('Navigation', () => {
 
       await clickMapLink(user);
 
-      await screen.findByTestId(map.testId, {}, { timeout: 10000 });
+      await screen.findByTestId(mapContent.testId, {}, { timeout: 10000 });
 
       await searchLocation(user, 'london');
 
-      expect(screen.queryByTestId(map.testId)).toBeNull();
+      expect(screen.queryByTestId(mapContent.testId)).toBeNull();
     });
 
     it('Should not show any search result when navigating to the map', async () => {
@@ -301,36 +256,6 @@ describe('Navigation', () => {
       await clickMapLink(user);
 
       expect(screen.queryAllByText(/London/)).toHaveLength(0);
-    });
-  });
-
-  describe('Current location', () => {
-    it(`Should render nav link: ${nav.currentLocation.text}`, async () => {
-      setup();
-      expect(
-        (await screen.findAllByText(nav.currentLocation.text)).length
-      ).toBeGreaterThan(0);
-    });
-
-    it(`Clicking the link should get user to the current location weather`, async () => {
-      const { user } = setup('/map');
-      await user.click(
-        (
-          await screen.findAllByText(nav.currentLocation.text)
-        )[0]
-      );
-
-      await screen.findAllByText(userWeatherMock.name, {}, { timeout: 10000 });
-    });
-
-    it("Should show the current city name for the user's current location", async () => {
-      setup();
-      await screen.findByText(userWeatherMock.name, {}, { timeout: 10000 });
-    });
-
-    it("Should show the current city weather for the user's current location", async () => {
-      setup();
-      await assertLocationWeather(userWeatherMock);
     });
   });
 });

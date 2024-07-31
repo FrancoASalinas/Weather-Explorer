@@ -1,6 +1,7 @@
-import { loadingIndicator } from '../contents/LoadingIndicator';
-const LoadingIndicator = () => (
-  <span data-testid={loadingIndicator.testid} className='loader'></span>
-);
+import { loadingIndicator } from '../constants/LoadingIndicator';
+
+function LoadingIndicator() {
+  return <span data-testid={loadingIndicator.testid} className='loader'></span>;
+}
 
 export default LoadingIndicator;

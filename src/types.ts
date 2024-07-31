@@ -4,7 +4,7 @@ type WeatherData = {
     lat: number;
   };
   weather: { id: number; main: string; description: string; icon: string }[];
-  base: any;
+  base: string;
   main: {
     temp: number;
     feels_like: number;
@@ -25,11 +25,11 @@ type WeatherData = {
   rain?: { '1h'?: number; '3h'?: number };
   snow?: { '1h'?: number; '3h'?: number };
   dt: number;
-  timezone: any;
-  id: any;
-  name: any;
-  cod: any;
-  sys: any;
+  timezone: string;
+  id: string;
+  name: string;
+  cod: string;
+  sys: string;
 };
 
 type Location = {
@@ -54,4 +54,42 @@ type Layer = {
   id: string;
 };
 
-export { type WeatherData, type Location, type UserLocationData, type Layer };
+type WeatherHistoryData = {
+  latitude: number;
+  longitude: number;
+  generationtime_ms: number;
+  utc_offset_seconds: 0;
+  timezone: string;
+  timezone_abbreviation: string;
+  elevation: number;
+  daily_units: {
+    time: 'iso8601';
+    weather_code: 'wmo code';
+    temperature_2m_max: '°C';
+    temperature_2m_min: '°C';
+    rain_sum: 'mm';
+    showers_sum: 'mm';
+    snowfall_sum: 'cm';
+    wind_speed_10m_max: 'km/h';
+    wind_direction_10m_dominant: '°';
+  };
+  daily: {
+    time: string[];
+    weather_code: number[];
+    temperature_2m_max: number[];
+    temperature_2m_min: number[];
+    rain_sum: number[];
+    showers_sum: number[];
+    snowfall_sum: number[];
+    wind_speed_10m_max: number[];
+    wind_direction_10m_dominant: number[];
+  };
+};
+
+export {
+  type WeatherData,
+  type Location,
+  type UserLocationData,
+  type Layer,
+  type WeatherHistoryData,
+};

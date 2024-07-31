@@ -1,6 +1,6 @@
 import { WeatherData } from '../types';
 
-const data: WeatherData = {
+const userWeatherMock: WeatherData = {
   coord: {
     lon: -46.6388,
     lat: -23.5482,
@@ -52,4 +52,4 @@ const data: WeatherData = {
   cod: 200,
 };
 
-export default data;
+export default userWeatherMock;

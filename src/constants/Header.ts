@@ -1,4 +1,4 @@
-const nav = {
+export const nav = {
   map: {
     text: 'Interactive Map',
   },
@@ -6,5 +6,3 @@ const nav = {
     text: 'My Location',
   },
 };
-
-export { nav };

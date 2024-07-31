@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import routes from '../routes';
+import routes from '../utils/routes';
 import userWeather from '../mocks/userWeatherMock';
-import { map } from '../contents/InteractiveMap';
+import { mapContent } from '../constants/InteractiveMap';
 
 function setup(initialEntry: string) {
   render(<MemoryRouter initialEntries={[initialEntry]}>{routes}</MemoryRouter>);
@@ -18,7 +18,7 @@ describe('/', () => {
 describe('/map', () => {
   it('Should render interactive map', async () => {
     setup('/map');
-    await screen.findByTestId(map.testId);
+    await screen.findByTestId(mapContent.testId);
   });
 });
 

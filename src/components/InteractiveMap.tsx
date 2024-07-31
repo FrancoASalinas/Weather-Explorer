@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { map as mapContent } from '../contents/InteractiveMap';
 import L from 'leaflet';
-import API_KEY from '../API_KEY';
+import API_KEY from '../utils/API_KEY';
 import layers from '../utils/layers';
 import { Layer } from '../types';
 import Legend from './Legend';
 import SidePanel from './SidePanel';
+import { mapContent } from '../constants/InteractiveMap';
 
 function InteractiveMap() {
   const [layer, setLayer] = useState<Layer>(layers[0]);
@@ -16,6 +16,7 @@ function InteractiveMap() {
     const newMap = L.map('map', { center: [15, 15], zoom: 3 });
     setMap(newMap);
   }
+
   function createWeatherLayer() {
     const newLayer =
       map &&
@@ -27,7 +28,7 @@ function InteractiveMap() {
     setCurrentLayer(newLayer);
     return newLayer;
   }
-
+  
   useEffect(() => {
     if (map && currentLayer) {
       map.removeLayer(currentLayer);
