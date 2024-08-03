@@ -43,6 +43,7 @@ const userWeatherMock: WeatherData = {
     type: 1,
     id: 8394,
     country: 'BR',
+    
     sunrise: 1721209640,
     sunset: 1721248665,
   },

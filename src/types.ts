@@ -25,11 +25,17 @@ type WeatherData = {
   rain?: { '1h'?: number; '3h'?: number };
   snow?: { '1h'?: number; '3h'?: number };
   dt: number;
-  timezone: string;
-  id: string;
+  timezone: number;
+  id: number;
   name: string;
-  cod: string;
-  sys: string;
+  cod: number;
+  sys: {
+    type: number;
+    id: number;
+    country: string;
+    sunrise: number;
+    sunset: number;
+  };
 };
 
 type Location = {
