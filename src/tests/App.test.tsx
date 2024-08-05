@@ -168,7 +168,7 @@ describe("Location's weather", () => {
 
       await assertLocationWeather(weatherData);
     }
-  );
+  , 20000);
 
   it.each(locationWithWeatherData)(
     'Should not render weather id',

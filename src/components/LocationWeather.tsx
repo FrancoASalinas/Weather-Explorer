@@ -12,6 +12,10 @@ import cloudyNight from '../assets/cloudy-night.jpg';
 import brokenClouds from '../assets/broken-clouds.jpg';
 import cloudy from '../assets/cloudy.jpg';
 import { Link } from 'react-router-dom';
+import windIcon from '../assets/wind-icon.svg';
+import temperatureIcon from '../assets/temperature-icon.svg';
+import humidityIcon from '../assets/humidity-icon.svg';
+import visibilityIcon from '../assets/visibility-icon.svg';
 
 export const testId = 'weather';
 
@@ -75,54 +79,52 @@ export default function LocationWeather({
             </div>
           </>
         )}
-        {title && (
-          <h3 className='user-city-name weather__data-item'>{title}</h3>
-        )}
+        {title && <h3 className='weather--user__name'>{title}</h3>}
+        <img
+          className='weather__icon'
+          src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
+        />
         {weather.map(data => (
-          <li key={data.id} className='weather__data-item'>
-            <span>
-              {data.main} ({data.description})
-            </span>
-          </li>
+          <span className='weather__description weather__data'>
+            {data.main} ({data.description})
+          </span>
         ))}
-        <li className='weather__data-item'>
-          <span>Temperature</span>
-          <ul>
-            <li>{main.temp}ºC</li>
-            <li>Max: {main.temp_max}ºC</li>
-            <li>Min: {main.temp_min}ºC</li>
-            <li>Feels like: {main.feels_like}ºC</li>
-          </ul>
-        </li>
-        <li className='weather__data-item'>
-          <span>Humidity</span>
-          <ul>
-            <li>{main.humidity}%</li>
-          </ul>
-        </li>
+        <div className='weather__data weather__temp'>
+          <img
+            className='weather__data__icon'
+            src={temperatureIcon}
+            alt='temperature'
+          />
+          {main.temp}ºC
+        </div>
+        <div className='weather__data weather__humidity'>
+          <img
+            className='weather__data__icon'
+            src={humidityIcon}
+            alt='humidity'
+          />
+          {main.humidity}%
+        </div>
         {visibility && (
-          <li className='weather__data-item'>
-            <span>Visibility</span>
-            <ul>
-              <li>{visibility / 1000}km</li>
-            </ul>
-          </li>
+          <div className='weather__data weather__visibility'>
+            <img
+              className='weather__data__icon'
+              src={visibilityIcon}
+              alt='visibility'
+            />
+            {visibility / 1000}km
+          </div>
         )}
-        <li className='weather__data-item'>
-          <span>Wind</span>
-          <ul>
-            <li>Speed: {wind.speed}m/s</li>
-            <li>Direction: {wind.deg}º</li>
-          </ul>
-        </li>
-        <li className='weather__data-item'>
-          <Link
-            className='weather__history-link'
-            to={`/history/${lat}/${lon}/${name}`}
-          >
-            Past Week
-          </Link>
-        </li>
+        <div className='weather__data weather__wind'>
+          <img className='weather__data__icon' src={windIcon} alt='wind' />
+          <span>{wind.speed}m/s</span> <span>{wind.deg}º</span>
+        </div>
+        <Link
+          className='weather__history-link'
+          to={`/history/${lat}/${lon}/${name}`}
+        >
+          Past Week
+        </Link>
       </div>
     );
   }

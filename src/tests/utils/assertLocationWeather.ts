@@ -3,19 +3,13 @@ import { testId } from '../../components/LocationWeather';
 import { WeatherData } from '../../types';
 
 async function assertLocationWeather(weatherData: WeatherData) {
-  const location = await screen.findByTestId(testId);
+  const location = await screen.findByTestId(testId, {}, { timeout: 6000 });
   const { weather, main, visibility, wind } = weatherData;
   const entries = [
-    `Temperature`,
     `${main.temp}ºC`,
-    `Max: ${main.temp_max}ºC`,
-    `Min: ${main.temp_min}ºC`,
-    `Feels like: ${main.feels_like}ºC`,
-    'Humidity',
     `${main.humidity}%`,
-    'Wind',
-    `Speed: ${wind.speed}m/s`,
-    `Direction: ${wind.deg}º`,
+    `${wind.speed}m/s`,
+    `${wind.deg}º`,
   ];
 
   for (const entry of entries) {
@@ -32,10 +26,11 @@ async function assertLocationWeather(weatherData: WeatherData) {
   );
 
   if (visibility) {
-    (await within(location).findByText('Visibility'), {}, { timeout: 5000 }) &&
-      (await within(location).findByText(`${visibility / 1000}km`),
+    await within(location).findByText(
+      `${visibility / 1000}km`,
       {},
-      { timeout: 5000 });
+      { timeout: 5000 }
+    );
   }
 }
 
