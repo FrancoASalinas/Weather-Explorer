@@ -160,7 +160,7 @@
 .weather--location {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(2, minmax(45%, 128px));
+  grid-template-columns: repeat(2, 128px);
   grid-template-rows: var(--size-9) repeat(6, 50px);
   grid-template-areas:
     'name icon'
@@ -169,7 +169,7 @@
     'wind visib'
     'history history';
   row-gap: var(--size-2);
-  column-gap: var(--size-5);
+  column-gap: var(--size-7);
   align-items: start;
   height: 100%;
   width: 100%;
@@ -197,7 +197,7 @@
   width: 100%;
   height: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
   text-align: center;
   z-index: 100;
 }
@@ -234,7 +234,7 @@
   z-index: 200;
   height: 100%;
   width: auto;
-  margin: 0 auto;
+  justify-self: end;
 }
 
 .weather__temp {
@@ -243,10 +243,13 @@
 
 .weather__humidity {
   grid-area: humid;
+  justify-content: space-between;
+  flex-grow: 0.5;
 }
 
 .weather__visibility {
   grid-area: visib;
+  justify-content: space-between;
 }
 .weather__wind {
   grid-area: wind;
