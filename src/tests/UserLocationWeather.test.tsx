@@ -3,6 +3,7 @@ import { nav } from '../constants/Header';
 import setup from './routerSetup';
 import userWeatherMock from '../mocks/userWeatherMock';
 import assertLocationWeather from './utils/assertLocationWeather';
+import { loadingIndicator } from '../constants/LoadingIndicator';
 
 it(`Should render nav link: ${nav.currentLocation.text}`, async () => {
   setup();
@@ -26,4 +27,9 @@ it("Should show the current city name for the user's current location", async ()
 it("Should show the current city weather for the user's current location", async () => {
   setup();
   await assertLocationWeather(userWeatherMock);
+});
+
+it('Should show a loading spinner when loading', async () => {
+  setup();
+  await screen.findByTestId(loadingIndicator.testid);
 });
