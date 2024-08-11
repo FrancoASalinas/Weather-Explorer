@@ -3,8 +3,8 @@ import L from 'leaflet';
 import API_KEY from '../utils/API_KEY';
 import layers from '../utils/layers';
 import { Layer } from '../types';
-import Legend from './Legend';
-import SidePanel from './SidePanel';
+import Legend from '../components/Legend';
+import SidePanel from '../components/SidePanel';
 import { mapContent } from '../constants/InteractiveMap';
 
 function InteractiveMap() {

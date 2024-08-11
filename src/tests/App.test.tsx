@@ -1,4 +1,4 @@
-import { error } from '../constants/Locations';
+import { error } from '../constants/LocationSearch';
 import { mapContent } from '../constants/InteractiveMap';
 import { nav } from '../constants/Header';
 import { input as appInput, button as appButton } from '../constants/Searchbar';
@@ -167,8 +167,9 @@ describe("Location's weather", () => {
       await showLocationWeather(user, lat, lon);
 
       await assertLocationWeather(weatherData);
-    }
-  , 20000);
+    },
+    20000
+  );
 
   it.each(locationWithWeatherData)(
     'Should not render weather id',

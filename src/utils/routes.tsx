@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import App from '../App';
-import InteractiveMap from '../components/InteractiveMap';
-import Locations from '../components/Locations';
-import UserLocationWeather from '../components/UserLocationWeather';
+import InteractiveMap from '../pages/InteractiveMap';
+import Locations from '../pages/LocationSearch';
+import UserLocationWeather from '../pages/UserLocationWeather';
 import WeatherHistory from '../components/WeatherHistory';
 
 const routes = (

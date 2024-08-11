@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Location as LocationType } from '../types';
-import LoadingIndicator from './LoadingIndicator';
-import Location from './Location';
+import LoadingIndicator from '../components/LoadingIndicator';
+import Location from '../components/Location';
 import { useSearchParams } from 'react-router-dom';
 import API_KEY from '../utils/API_KEY';
-import { error } from '../constants/Locations';
+import { error } from '../constants/LocationSearch';
 
 export default function Locations() {
   const [locationArray, setLocationArray] = useState<LocationType[]>([]);
