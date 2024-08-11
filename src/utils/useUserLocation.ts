@@ -14,9 +14,6 @@ function useUserLocation() {
     }
   }, [position, error]);
 
-  console.log(position);
-  console.log(error);
-
   return [position, error] as const;
 }
 

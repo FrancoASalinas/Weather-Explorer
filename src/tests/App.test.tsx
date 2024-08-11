@@ -54,6 +54,13 @@ describe('Search button', () => {
   });
 });
 describe('Searching', () => {
+  it('Should search the input when pressing ENTER key', async () => {
+    const { user } = setup();
+    await typeOnInput(user, 'london{Enter}');
+
+    await screen.findByTestId(loadingIndicator.testid);
+  });
+
   it(`Should render ${error.noCity} if the city does not exist`, async () => {
     const { user } = setup();
     await searchLocation(user, 'nonexistent');

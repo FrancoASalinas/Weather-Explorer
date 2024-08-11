@@ -6,6 +6,10 @@ export default function SearchBar() {
   const [searchInput, setSearchInput] = useState('');
   const navigate = useNavigate();
 
+  function searchLocation() {
+    navigate(`/search?q=${searchInput}`);
+  }
+
   return (
     <div className='header__searchbar'>
       <input
@@ -13,11 +17,12 @@ export default function SearchBar() {
         type='text'
         placeholder={input.placeholder}
         onChange={e => setSearchInput(e.target.value)}
+        onKeyDown={e => e.key === 'Enter' && searchLocation()}
         value={searchInput}
       />
       <button
         disabled={searchInput.trim() === ''}
-        onClick={() => navigate(`/search?q=${searchInput}`)}
+        onClick={searchLocation}
         className='header__searchbar__button'
       >
         {button.text}
