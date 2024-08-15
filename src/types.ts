@@ -60,24 +60,45 @@ type Layer = {
   id: string;
 };
 
-type WeatherHistoryData = {
+type ForecastData = {
   latitude: number;
   longitude: number;
-  generationtime_ms: number;
-  utc_offset_seconds: 0;
-  timezone: string;
-  timezone_abbreviation: string;
-  elevation: number;
+  current_units: {
+    time: string;
+    interval: string;
+    temperature_2m: string;
+    relative_humidity_2m: string;
+    rain: string;
+    showers: string;
+    snowfall: string;
+    weather_code: string;
+    pressure_msl: string;
+    wind_speed_10m: string;
+    wind_direction_10m: string;
+  };
+  current: {
+    time: string;
+    interval: number;
+    temperature_2m: number;
+    relative_humidity_2m: number;
+    rain: number;
+    showers: number;
+    snowfall: number;
+    weather_code: number;
+    pressure_msl: number;
+    wind_speed_10m: number;
+    wind_direction_10m: number;
+  };
   daily_units: {
-    time: 'iso8601';
-    weather_code: 'wmo code';
-    temperature_2m_max: '°C';
-    temperature_2m_min: '°C';
-    rain_sum: 'mm';
-    showers_sum: 'mm';
-    snowfall_sum: 'cm';
-    wind_speed_10m_max: 'km/h';
-    wind_direction_10m_dominant: '°';
+    time: string;
+    weather_code: string;
+    temperature_2m_max: string;
+    temperature_2m_min: string;
+    rain_sum: string;
+    showers_sum: string;
+    snowfall_sum: string;
+    wind_speed_10m_max: string;
+    wind_direction_10m_dominant: string;
   };
   daily: {
     time: string[];
@@ -97,5 +118,5 @@ export {
   type Location,
   type UserLocationData,
   type Layer,
-  type WeatherHistoryData,
+  type ForecastData,
 };

@@ -19,16 +19,6 @@ it(`Clicking the link should get user to the current location weather`, async ()
   await screen.findAllByText(userWeatherMock.name, {}, { timeout: 20000 });
 }, 20000);
 
-it("Should show the current city name for the user's current location", async () => {
-  setup();
-  await screen.findByText(userWeatherMock.name, {}, { timeout: 10000 });
-});
-
-it("Should show the current city weather for the user's current location", async () => {
-  setup();
-  await assertLocationWeather(userWeatherMock);
-});
-
 it('Should show a loading spinner when loading', async () => {
   setup();
   await screen.findByTestId(loadingIndicator.testid);

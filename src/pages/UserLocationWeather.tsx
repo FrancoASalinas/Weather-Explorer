@@ -22,7 +22,6 @@ function UserLocationWeather() {
           isToggle={true}
           className='weather--user'
           currentWeather={userWeather}
-          title={userWeather?.name}
         />
       ) : error ? (
         <h2>Error: {error.message}</h2>

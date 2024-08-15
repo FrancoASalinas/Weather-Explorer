@@ -1,5 +1,5 @@
 import { screen, within } from '@testing-library/react';
-import { testId } from '../../components/LocationWeather';
+import { testId } from '../../constants/LocationWeather';
 import { WeatherData } from '../../types';
 
 async function assertLocationWeather(weatherData: WeatherData) {
