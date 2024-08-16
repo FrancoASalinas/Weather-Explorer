@@ -1,7 +1,7 @@
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import routes from '../utils/routes';
+import routes from 'src/utils/routes';
 
 function setup(route?: string) {
   return {

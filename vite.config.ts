@@ -12,4 +12,9 @@ export default defineConfig({
     setupFiles: 'src/tests/setup.ts',
   },
   base: '/Weather-Explorer/',
+  resolve: {
+    alias: {
+      src: '/src'
+    }
+  }
 });

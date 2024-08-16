@@ -1,9 +1,8 @@
 import { screen } from '@testing-library/react';
-import { nav } from '../constants/Header';
-import setup from './routerSetup';
-import userWeatherMock from '../mocks/userWeatherMock';
-import assertLocationWeather from './utils/assertLocationWeather';
-import { loadingIndicator } from '../constants/LoadingIndicator';
+import { nav } from 'src/constants/Header';
+import setup from 'src/tests/utils/routerSetup';
+import userWeatherMock from 'src/mocks/userWeatherMock';
+import { loadingIndicator } from 'src/constants/LoadingIndicator';
 
 it(`Should render nav link: ${nav.currentLocation.text}`, async () => {
   setup();

@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import routes from '../utils/routes';
-import userWeather from '../mocks/userWeatherMock';
-import { mapContent } from '../constants/InteractiveMap';
+import routes from 'src/utils/routes';
+import userWeather from 'src/mocks/userWeatherMock';
+import { mapContent } from 'src/constants/InteractiveMap';
 
 function setup(initialEntry: string) {
   render(<MemoryRouter initialEntries={[initialEntry]}>{routes}</MemoryRouter>);
