@@ -94,9 +94,7 @@ type ForecastData = {
     weather_code: string;
     temperature_2m_max: string;
     temperature_2m_min: string;
-    rain_sum: string;
-    showers_sum: string;
-    snowfall_sum: string;
+    precipitation_sum: string;
     wind_speed_10m_max: string;
     wind_direction_10m_dominant: string;
   };
@@ -105,15 +103,24 @@ type ForecastData = {
     weather_code: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
-    rain_sum: number[];
-    showers_sum: number[];
-    snowfall_sum: number[];
+    precipitation_sum: number[];
     wind_speed_10m_max: number[];
     wind_direction_10m_dominant: number[];
   };
 };
 
+type ForecastCardData = {
+      time: string,
+      weather_code: number,
+      precipitation_sum: number,
+      temperature_max: number,
+      temperature_min: number,
+      wind_direction: number,
+      wind_speed: number,
+}
+
 export {
+  type ForecastCardData,
   type WeatherData,
   type Location,
   type UserLocationData,
