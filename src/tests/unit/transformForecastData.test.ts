@@ -6,7 +6,7 @@ const transformedDataMock = transformForecastData(forecastMock);
 
 it('Should transform daily object into an array of data mapped for every date', async () => {
   forecastMock.daily.time.map((time, index) => {
-    expect(transformedDataMock.daily).toContainEqual({
+    expect(transformedDataMock).toContainEqual({
       time: formatDate(time),
       weather_code: forecastMock.daily.weather_code[index],
       temperature_max: forecastMock.daily.temperature_2m_max[index],

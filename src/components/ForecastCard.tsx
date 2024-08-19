@@ -1,3 +1,4 @@
+import { card, img } from 'src/constants/ForecastCard';
 import { ForecastCardData } from 'src/types';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 
@@ -5,13 +6,13 @@ function ForecastCard({ data }: { data: ForecastCardData }) {
   const weatherDescription = weatherDescriptions[`${data.weather_code}`].day;
 
   return (
-    <div className='forecast-card'>
+    <div className='forecast-card' data-testid={card.testid}>
       <span className='forecast-card__date'>{data.time}</span>
       <img
         className='forecast-card__icon'
         src={weatherDescription.image}
         alt={weatherDescription.description}
-        data-testid='forecast-icon'
+        data-testid={img.testid}
       />
       <div className='forecast-card__temperature'>
         <span className='forecast-card__temperature__max'>

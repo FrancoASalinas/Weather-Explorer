@@ -5,55 +5,67 @@ import transformForecastData from 'src/utils/transformForecastData';
 import componentSetup from '../utils/componentSetup';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 import '@testing-library/jest-dom';
+import { ForecastCardData } from 'src/types';
+import { img } from 'src/constants/ForecastCard';
 
-function setup() {
-  componentSetup(
-    <ForecastCard data={transformForecastData(forecastMock).daily[index]} />
+function setup(index: number) {
+  return componentSetup(
+    <ForecastCard data={transformForecastData(forecastMock)[index]} />
   );
 }
 
 const transformedDataMock = transformForecastData(forecastMock);
 
-const index = Math.floor(Math.random() * 15);
+function indexRows(table: ForecastCardData[]) {
+  return table.map((value, index) => ({ ...value, index: index }));
+}
 
-it('Should render max temperature', async () => {
-  setup();
+const indexedData = indexRows(transformedDataMock);
 
-  await screen.findByText(
-    `${transformedDataMock.daily[index].temperature_max}${forecastMock.daily_units.temperature_2m_max}`
-  );
+it.each(indexedData)(
+  'Should render max temperature',
+  async ({ index, temperature_max, units }) => {
+    setup(index);
+
+    await screen.findByText(`${temperature_max}${units.temperature_2m_max}`);
+  }
+);
+
+it.each(indexedData)(
+  'Should render min temperature',
+  async ({ index, temperature_min, units }) => {
+    setup(index);
+
+    await screen.findByText(`${temperature_min}${units.temperature_2m_max}`);
+  }
+);
+
+it.each(indexedData)('Should render date', async ({ index, time }) => {
+  setup(index);
+
+  await screen.findByText(time);
 });
 
-it('Should render min temperature', async () => {
-  setup();
+it.each(indexedData)(
+  'Should render an icon with src depending on the weather code',
+  async ({ index, weather_code }) => {
+    setup(index);
 
-  await screen.findByText(
-    `${transformedDataMock.daily[index].temperature_min}${forecastMock.daily_units.temperature_2m_max}`
-  );
-});
+    expect(await screen.findByTestId(img.testid)).toHaveAttribute(
+      'src',
+      weatherDescriptions[`${weather_code}`].day.image
+    );
+  }
+);
 
-it('Should render date', async () => {
-  setup();
+it.each(indexedData)(
+  'Should render an icon with alt depending on the weather code',
+  async ({ index, weather_code }) => {
+    setup(index);
 
-  await screen.findByText(transformedDataMock.daily[index].time);
-});
-
-it('Should render an icon with src depending on the weather code', async () => {
-  setup();
-
-  expect(await screen.findByTestId('forecast-icon')).toHaveAttribute(
-    'src',
-    weatherDescriptions[`${transformedDataMock.daily[index].weather_code}`].day
-      .image
-  );
-});
-
-it('Should render an icon with alt depending on the weather code', async () => {
-  setup();
-
-  expect(await screen.findByTestId('forecast-icon')).toHaveAttribute(
-    'alt',
-    weatherDescriptions[`${transformedDataMock.daily[index].weather_code}`].day
-      .description
-  );
-});
+    expect(await screen.findByTestId(img.testid)).toHaveAttribute(
+      'alt',
+      weatherDescriptions[`${weather_code}`].day.description
+    );
+  }
+);

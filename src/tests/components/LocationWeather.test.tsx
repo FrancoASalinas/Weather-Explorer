@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import LocationWeather from 'src/components/LocationWeather';
+import { carousel } from 'src/constants/ForecastCarousel';
 import userWeatherMock from 'src/mocks/userWeatherMock';
 
 function setup() {
@@ -21,5 +22,5 @@ it('Should show the current city name', async () => {
 
 it('Should render the forecast carousel', async () => {
   setup();
-  await screen.findByTestId('forecast-carousel');
+  await screen.findByTestId(carousel.testid);
 });
