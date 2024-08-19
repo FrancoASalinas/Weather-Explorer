@@ -1,4 +1,5 @@
 import { ForecastData } from 'src/types';
+import formatDate from './formatDate';
 
 function transformForecastData(data: ForecastData) {
   const {
@@ -11,19 +12,17 @@ function transformForecastData(data: ForecastData) {
   } = data.daily;
 
   return {
-    current_units: data.current_units,
-    daily_units: data.daily_units,
-    current: data.current,
     daily: data.daily.time.map((date, index) => ({
-      time: date,
+      time: formatDate(date),
       weather_code: weather_code[index],
       precipitation_sum: precipitation_sum[index],
       temperature_max: temperature_2m_max[index],
       temperature_min: temperature_2m_min[index],
       wind_direction: wind_direction_10m_dominant[index],
       wind_speed: wind_speed_10m_max[index],
+      units: data.daily_units,
     })),
   };
 }
 
-export default transformForecastData
+export default transformForecastData;

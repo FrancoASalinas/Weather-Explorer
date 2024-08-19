@@ -61,6 +61,12 @@
   --font-size-11: 72px;
   --font-text: 'Work Sans';
   --font-headline: 'Cabin';
+  --border-radius-1: 1px;
+  --border-radius-2: 2px;
+  --border-radius-3: 4px;
+  --border-radius-4: 8px;
+  --border-radius-5: 12px;
+  --border-radius-6: 18px;
 }
 
 #root {
@@ -130,7 +136,7 @@
   color: var(--primary-100);
   padding: var(--size-2);
   font-size: var(--font-size-2);
-  border-radius: var(--size-1);
+  border-radius: var(--border-radius-3);
 }
 
 .locations__location__button:hover {
@@ -279,7 +285,7 @@
   color: var(--primary-900);
   background-color: var(--primary-500);
   padding: var(--size-3);
-  border-radius: var(--size-1);
+  border-radius: var(--border-radius-3);
   box-shadow: 0 0 3px var(--primary-900);
   text-shadow: none;
   font-size: var(--font-size-4);
@@ -409,7 +415,7 @@
   background-color: var(--primary-600);
   color: var(--primary-100);
   padding: var(--size-2);
-  border-radius: var(--size-1);
+  border-radius: var(--border-radius-3);
 }
 
 .header__searchbar__input::placeholder {
@@ -424,7 +430,7 @@
   color: var(--primary-100);
   padding: var(--size-2);
   font-size: var(--font-size-2);
-  border-radius: var(--size-1);
+  border-radius: var(--border-radius-3);
   width: 30%;
   overflow-x: hidden;
 }
@@ -465,7 +471,7 @@
 .map-container__legend__bar--wind {
   width: 100%;
   height: 100%;
-  border-radius: var(--size-2);
+  border-radius: var(--border-radius-4);
   border: 1px solid var(--primary-100);
   box-shadow: 0 0 4px var(--primary-700);
 }
@@ -705,6 +711,50 @@
 }
 .loader::after {
   animation-delay: 0ms;
+}
+
+.forecast-card {
+  border: 1px solid var(--primary-700);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--size-10);
+  height: var(--size-10);
+  padding: var(--size-2) var(--size-3);
+  border-radius: var(--border-radius-4);
+  color: var(--primary-900);
+}
+
+.forecast-card__temperature {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-3);
+}
+
+.forecast-card__icon {
+  width: auto;
+  height: var(--size-8);
+}
+
+.forecast-card__date {
+  font-weight: 500;
+  font-size: var(--font-size-4);
+}
+
+.forecast-card__temperature__max {
+  font-weight: 500;
+}
+
+.forecast-card__temperature__min {
+  color: var(--primary-800);
+}
+
+.forecast-card__temperature__divisor {
+  height: 100%;
+  width: 1px;
+  background-color: var(--primary-900);
 }
 
 @keyframes animloader {

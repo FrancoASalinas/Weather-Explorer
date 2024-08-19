@@ -110,14 +110,15 @@ type ForecastData = {
 };
 
 type ForecastCardData = {
-      time: string,
-      weather_code: number,
-      precipitation_sum: number,
-      temperature_max: number,
-      temperature_min: number,
-      wind_direction: number,
-      wind_speed: number,
-}
+  time: string;
+  weather_code: number;
+  precipitation_sum: number;
+  temperature_max: number;
+  temperature_min: number;
+  wind_direction: number;
+  wind_speed: number;
+  units: ForecastData['daily_units'];
+};
 
 export {
   type ForecastCardData,
