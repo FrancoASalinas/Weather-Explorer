@@ -1,4 +1,4 @@
-import { WeatherData } from '../types';
+import { ForecastData, WeatherData } from '../types';
 import windIcon from '../assets/wind-icon.svg';
 import temperatureIcon from '../assets/temperature-icon.svg';
 import humidityIcon from '../assets/humidity-icon.svg';
@@ -6,18 +6,17 @@ import visibilityIcon from '../assets/visibility-icon.svg';
 import getBackgroundImage from '../utils/getBackgroundImage';
 import { testId } from '../constants/LocationWeather';
 import ForecastCarousel from './ForecastCarousel';
-import forecastMock from '../mocks/forecastMock';
 
 export default function LocationWeather({
   currentWeather,
   isToggle,
   className,
+  forecastData,
 }: {
   currentWeather?: WeatherData;
   isToggle: boolean;
   className: string;
-  lat: number;
-  lon: number;
+  forecastData: ForecastData;
 }) {
   if (currentWeather && isToggle) {
     const { weather, main, visibility, wind, name } = currentWeather;
@@ -73,7 +72,7 @@ export default function LocationWeather({
           <img className='weather__data__icon' src={windIcon} alt='wind' />
           <span>{wind.speed}m/s</span> <span>{wind.deg}º</span>
         </div>
-        <ForecastCarousel forecastData={forecastMock} />
+        <ForecastCarousel forecastData={forecastData} />
       </div>
     );
   }

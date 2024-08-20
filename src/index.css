@@ -167,13 +167,13 @@
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(2, 128px);
-  grid-template-rows: var(--size-9) repeat(6, 50px);
+  grid-template-rows: var(--size-9) repeat(3, 50px) auto;
   grid-template-areas:
     'name icon'
     'desc desc'
     'temp humid'
     'wind visib'
-    'history history';
+    'forecast forecast';
   row-gap: var(--size-2);
   column-gap: var(--size-7);
   align-items: start;
@@ -714,7 +714,6 @@
 }
 
 .forecast-card {
-  border: 1px solid var(--primary-700);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -723,8 +722,7 @@
   flex-shrink: 0;
   height: var(--size-10);
   padding: var(--size-2) var(--size-3);
-  border-radius: var(--border-radius-4);
-  color: var(--primary-900);
+  color: var(--primary-100);
 }
 
 .forecast-card__temperature {
@@ -749,24 +747,26 @@
 }
 
 .forecast-card__temperature__min {
-  color: var(--primary-800);
+  color: var(--primary-200);
 }
 
 .forecast-card__temperature__divisor {
   height: 100%;
   width: 1px;
-  background-color: var(--primary-900);
+  background-color: var(--primary-100);
 }
 
 .forecast-carousel {
   display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: space-evenly;
   width: 100%;
   max-width: var(--size-15);
   padding: var(--size-3) var(--size-5);
   overflow-x: scroll;
   gap: var(--size-4);
+  z-index: 50;
+  grid-area: forecast;
 }
 
 @keyframes animloader {

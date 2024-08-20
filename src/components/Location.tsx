@@ -1,29 +1,28 @@
 import { useState } from 'react';
-import { Location as LocationType, WeatherData } from '../types';
+import { ForecastData, Location as LocationType, WeatherData } from '../types';
 import LoadingIndicator from './LoadingIndicator';
 import API_KEY from '../utils/API_KEY';
 import LocationWeather from './LocationWeather';
 import { showWeatherButton } from '../constants/Location';
+import useFetch from 'src/utils/useFetch';
 
 function Location({ location }: { location: LocationType }) {
   const { lat, lon, name, country, state } = location;
-  const [isLoading, setIsLoading] = useState(false);
   const [isToggle, setIsToggle] = useState(false);
-  const [weatherData, setWeatherData] = useState<WeatherData>();
+  const weatherData: WeatherData = useFetch(
+    isToggle
+      ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+      : null
+  );
+  const forecastData: ForecastData = useFetch(
+    isToggle
+      ? `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant&timezone=GMT&past_days=7&forecast_days=8`
+      : null
+  );
+  const isLoading = isToggle && (!forecastData || !weatherData);
 
   async function handleLocationClick() {
     setIsToggle(prev => !prev);
-    if (weatherData === undefined) {
-      setIsLoading(true);
-
-      await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
-      )
-        .then(res => res.json())
-        .then((data: WeatherData) => setWeatherData(data));
-
-      setIsLoading(false);
-    }
   }
 
   return (
@@ -52,19 +51,18 @@ function Location({ location }: { location: LocationType }) {
           {showWeatherButton.text}
         </button>
       </div>
-      {isToggle ? (
-        isLoading ? (
-          <LoadingIndicator />
-        ) : (
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        forecastData && (
           <LocationWeather
             className='weather--location'
             isToggle={isToggle}
             currentWeather={weatherData}
-            lat={lat}
-            lon={lon}
+            forecastData={forecastData}
           />
         )
-      ) : undefined}
+      )}
     </div>
   );
 }

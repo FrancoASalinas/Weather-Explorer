@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import LocationWeather from 'src/components/LocationWeather';
 import { carousel } from 'src/constants/ForecastCarousel';
+import forecastMock from 'src/mocks/forecastMock';
 import userWeatherMock from 'src/mocks/userWeatherMock';
 
 function setup() {
@@ -9,8 +10,7 @@ function setup() {
       className=''
       isToggle={true}
       currentWeather={userWeatherMock}
-      lat={53.2}
-      lon={23}
+      forecastData={forecastMock}
     />
   );
 }

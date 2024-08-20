@@ -3,7 +3,7 @@ import locationDataMock from './locationDataMock';
 import weatherDataList from './weatherDataMock';
 import userLocationMock from './userLocationMock';
 import userWeatherMock from './userWeatherMock';
-import weatherHistoryMock from './weatherHistoryMock';
+import forecastMock from './forecastMock';
 
 export const handlers = [
   http.get(
@@ -44,14 +44,8 @@ export const handlers = [
       console.error('Error getting weather for location');
     }
   ),
-
-  http.get('https://ipapi.co/json/', async () => {
-    await delay(300);
-    return HttpResponse.json(userLocationMock);
-  }),
-
   http.get('https://api.open-meteo.com/v1/forecast', async () => {
     await delay(400);
-    return HttpResponse.json(weatherHistoryMock);
+    return HttpResponse.json(forecastMock);
   }),
 ];

@@ -63,32 +63,6 @@ type Layer = {
 type ForecastData = {
   latitude: number;
   longitude: number;
-  current_units: {
-    time: string;
-    interval: string;
-    temperature_2m: string;
-    relative_humidity_2m: string;
-    rain: string;
-    showers: string;
-    snowfall: string;
-    weather_code: string;
-    pressure_msl: string;
-    wind_speed_10m: string;
-    wind_direction_10m: string;
-  };
-  current: {
-    time: string;
-    interval: number;
-    temperature_2m: number;
-    relative_humidity_2m: number;
-    rain: number;
-    showers: number;
-    snowfall: number;
-    weather_code: number;
-    pressure_msl: number;
-    wind_speed_10m: number;
-    wind_direction_10m: number;
-  };
   daily_units: {
     time: string;
     weather_code: string;

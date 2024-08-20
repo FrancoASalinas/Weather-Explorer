@@ -4,6 +4,7 @@ import API_KEY from '../utils/API_KEY';
 import LoadingIndicator from '../components/LoadingIndicator';
 import useFetch from '../utils/useFetch';
 import useUserLocation from '../utils/useUserLocation';
+import forecastMock from 'src/mocks/forecastMock';
 
 function UserLocationWeather() {
   const [userLocation, error] = useUserLocation();
@@ -17,11 +18,10 @@ function UserLocationWeather() {
     <>
       {userLocation && userWeather ? (
         <LocationWeather
-          lat={userLocation.latitude}
-          lon={userLocation.longitude}
           isToggle={true}
           className='weather--user'
           currentWeather={userWeather}
+          forecastData={forecastMock}
         />
       ) : error ? (
         <h2>Error: {error.message}</h2>

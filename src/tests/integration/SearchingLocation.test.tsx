@@ -109,7 +109,7 @@ async function showLocationWeather(user: UserEvent, lat: number, lon: number) {
 }
 
 it.each(locationWithWeatherData)(
-  `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all, rain past hour: $rain.1h, snow past hour: $snow.1h`,
+  `Should render weather main, weather description, temp: $main.temp, feels like: $main.feels_like, min temp: $main.temp_min, max temp: $main.temp_max, humidity: $main.humidity, visibility: $visibility, wind speed: $wind.speed, wind direction: $wind.deg, clouds: $clouds.all`,
   async weatherData => {
     const { lat, lon } = weatherData;
     const { user } = setup();
