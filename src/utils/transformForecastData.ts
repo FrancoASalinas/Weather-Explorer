@@ -11,6 +11,8 @@ function transformForecastData(data: ForecastData) {
     wind_speed_10m_max,
   } = data.daily;
 
+
+
   return data.daily.time.map((date, index) => ({
     time: formatDate(date),
     weather_code: weather_code[index],

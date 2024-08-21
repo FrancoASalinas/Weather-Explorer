@@ -9,7 +9,7 @@ function Legend({ layer }: { layer: Layer }) {
       </div>
       <div className='map-container__legend__metrics'>
         {metrics.map(metric => (
-          <div className='map-container__legend__metrics__metric'>{metric}</div>
+          <div key={metric} className='map-container__legend__metrics__metric'>{metric}</div>
         ))}
       </div>
     </div>

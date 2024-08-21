@@ -21,7 +21,7 @@ function UserLocationWeather() {
 
   return (
     <>
-      {userLocation && userWeather ? (
+      {userLocation && userWeather && forecastData ? (
         <LocationWeather
           isToggle={true}
           className='weather--user'

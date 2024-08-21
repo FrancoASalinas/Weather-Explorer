@@ -31,7 +31,12 @@ function SidePanel({
         </svg>
       </button>
       {layers.map(({ name }) => (
-        <CustomRadioInput isChecked={layer.name === name} name={name} onChange={onChange} />
+        <CustomRadioInput
+          key={name}
+          isChecked={layer.name === name}
+          name={name}
+          onChange={onChange}
+        />
       ))}
     </div>
   );
@@ -49,7 +54,7 @@ function CustomRadioInput({
   return (
     <label htmlFor={name} className='custom-label'>
       <input
-      className='radio-button'
+        className='radio-button'
         type='radio'
         id={name}
         checked={isChecked}

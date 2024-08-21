@@ -1,0 +1,57 @@
+@import '/src/styles/forecast.css';
+
+.forecast-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--size-10);
+  flex-shrink: 0;
+  height: var(--size-10);
+  padding: var(--size-2) var(--size-3);
+  color: var(--primary-100);
+}
+
+.forecast-card__temperature {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-2);
+}
+
+.forecast-card__icon {
+  width: auto;
+  height: var(--size-8);
+}
+
+.forecast-card__date {
+  font-weight: 500;
+  font-size: var(--font-size-4);
+}
+
+.forecast-card__temperature__max {
+  font-weight: 500;
+}
+
+.forecast-card__temperature__min {
+  color: var(--primary-200);
+}
+
+.forecast-card__temperature__divisor {
+  height: 100%;
+  width: 1px;
+  background-color: var(--primary-100);
+}
+
+.forecast-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  max-width: var(--size-15);
+  padding: var(--size-3) var(--size-5);
+  overflow-x: scroll;
+  gap: var(--size-4);
+  z-index: 50;
+  grid-area: forecast;
+}
