@@ -5,6 +5,7 @@ import API_KEY from '../utils/API_KEY';
 import LocationWeather from './LocationWeather';
 import { showWeatherButton } from '../constants/Location';
 import useFetch from 'src/utils/useFetch';
+import useForecastData from 'src/utils/useForecastData';
 
 function Location({ location }: { location: LocationType }) {
   const { lat, lon, name, country, state } = location;
@@ -14,10 +15,8 @@ function Location({ location }: { location: LocationType }) {
       ? `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
       : null
   );
-  const forecastData: ForecastData = useFetch(
-    isToggle
-      ? `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant&timezone=GMT&past_days=7&forecast_days=8`
-      : null
+  const forecastData: ForecastData = useForecastData(
+    isToggle ? { lat, lon } : null
   );
   const isLoading = isToggle && (!forecastData || !weatherData);
 
