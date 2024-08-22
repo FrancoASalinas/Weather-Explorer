@@ -49,9 +49,36 @@
   justify-content: space-evenly;
   width: 100%;
   max-width: var(--size-15);
-  padding: var(--size-3) var(--size-5);
+  padding: var(--size-3) var(--size-5) var(--size-2) var(--size-5);
   overflow-x: scroll;
   gap: var(--size-4);
   z-index: 50;
   grid-area: forecast;
+}
+
+.forecast-carousel::-webkit-scrollbar {
+  height: var(--size-1);
+}
+
+.forecast-carousel::-webkit-scrollbar-thumb {
+  background-color: var(--primary-800);
+  border-radius: var(--border-radius-6);
+}
+
+@media screen and (min-width: 500px) {
+  .forecast-carousel::-webkit-scrollbar {
+    height: var(--size-3);
+  }
+
+  .forecast-carousel::-webkit-scrollbar-thumb {
+    background-color: var(--primary-800);
+    border-radius: var(--border-radius-6);
+    background-clip: padding-box;
+    border: 3px solid #0000;
+  }
+
+  .forecast-carousel::-webkit-scrollbar-track {
+    background: var(--primary-700);
+    border-radius: var(--border-radius-6);
+  }
 }
