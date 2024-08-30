@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
-function useFetch(url: string | null) {
-  const [data, setData] = useState<null | any>(null);
+function useFetch<T>(url: string | null) {
+  const [data, setData] = useState<T>();
+  const [error, setError] = useState<{ error: string }>();
 
   useEffect(() => {
     if (url) {
@@ -10,11 +11,11 @@ function useFetch(url: string | null) {
         .then(data => {
           setData(data);
         })
-        .catch(err => setData({ error: err }));
+        .catch(err => setError({ error: err.message }));
     }
   }, [url]);
 
-  return data;
+  return [data, error] as const;
 }
 
 export default useFetch;

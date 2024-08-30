@@ -1,4 +1,6 @@
-export default [
+import { Location } from 'src/types';
+
+const locationDataMock: Location[] = [
   {
     name: 'London',
     local_names: {
@@ -16,17 +18,6 @@ export default [
     name: 'City of London',
     local_names: {
       es: 'City de Londres',
-      ru: 'Сити',
-      ur: 'لندن شہر',
-      zh: '倫敦市',
-      en: 'City of London',
-      pt: 'Cidade de Londres',
-      fr: 'Cité de Londres',
-      uk: 'Лондонське Сіті',
-      he: 'הסיטי של לונדון',
-      hi: 'सिटी ऑफ़ लंदन',
-      ko: '시티 오브 런던',
-      lt: 'Londono Sitis',
     },
     lat: 51.5156177,
     lon: -0.0919983,
@@ -37,27 +28,6 @@ export default [
     name: 'London2',
     local_names: {
       el: 'Λόντον',
-      fr: 'London',
-      oj: 'Baketigweyaang',
-      en: 'London',
-      bn: 'লন্ডন',
-      be: 'Лондан',
-      ko: '런던',
-      he: 'לונדון',
-      ru: 'Лондон',
-      lt: 'Londonas',
-      hy: 'Լոնտոն',
-      ga: 'Londain',
-      ja: 'ロンドン',
-      yi: 'לאנדאן',
-      cr: 'ᓬᐊᐣᑕᐣ',
-      iu: 'ᓚᓐᑕᓐ',
-      ar: 'لندن',
-      lv: 'Landona',
-      fa: 'لندن',
-      ug: 'لوندۇن',
-      th: 'ลอนดอน',
-      ka: 'ლონდონი',
     },
     lat: 42.9832406,
     lon: -81.243372,
@@ -65,3 +35,5 @@ export default [
     state: 'Ontario',
   },
 ];
+
+export default locationDataMock;

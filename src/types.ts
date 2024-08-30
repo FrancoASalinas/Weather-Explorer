@@ -1,41 +1,15 @@
 type WeatherData = {
-  coord: {
-    lon: number;
-    lat: number;
-  };
-  weather: { id: number; main: string; description: string; icon: string }[];
-  base: string;
+  weather: { id: number; description: string; icon: string };
   main: {
     temp: number;
-    feels_like: number;
-    pressure: number;
     humidity: number;
-    temp_min: number;
-    temp_max: number;
-    sea_level?: number;
-    grnd_level?: number;
   };
-  visibility?: number;
+  precipitation_probability: number;
   wind: {
     speed: number;
     deg: number;
-    gust?: number;
   };
-  clouds: { all: number };
-  rain?: { '1h'?: number; '3h'?: number };
-  snow?: { '1h'?: number; '3h'?: number };
-  dt: number;
-  timezone: number;
-  id: number;
   name: string;
-  cod: number;
-  sys: {
-    type: number;
-    id: number;
-    country: string;
-    sunrise: number;
-    sunset: number;
-  };
 };
 
 type Location = {
@@ -63,38 +37,65 @@ type Layer = {
 type ForecastData = {
   latitude: number;
   longitude: number;
+  current_units: {
+    time: string;
+    interval: string;
+    temperature_2m: string;
+    relative_humidity_2m: string;
+    is_day: string;
+    weather_code: string;
+    wind_speed_10m: string;
+    wind_direction_10m: string;
+  };
+  current: {
+    time: string;
+    interval: number;
+    temperature_2m: number;
+    relative_humidity_2m: number;
+    is_day: number;
+    weather_code: number;
+    wind_speed_10m: number;
+    wind_direction_10m: number;
+  };
   daily_units: {
     time: string;
     weather_code: string;
     temperature_2m_max: string;
     temperature_2m_min: string;
-    precipitation_sum: string;
     wind_speed_10m_max: string;
     wind_direction_10m_dominant: string;
+    precipitation_probability_max: string;
   };
   daily: {
     time: string[];
     weather_code: number[];
     temperature_2m_max: number[];
     temperature_2m_min: number[];
-    precipitation_sum: number[];
     wind_speed_10m_max: number[];
     wind_direction_10m_dominant: number[];
+    precipitation_probability_max: number[];
   };
 };
 
 type ForecastCardData = {
-  time: string;
-  weather_code: number;
-  precipitation_sum: number;
-  temperature_max: number;
-  temperature_min: number;
-  wind_direction: number;
-  wind_speed: number;
+  time: ForecastData['daily']['time'][0];
+  weather_code: ForecastData['daily']['weather_code'][0];
+  precipitation_probability_max: ForecastData['daily']['precipitation_probability_max'][0];
+  temperature_max: ForecastData['daily']['temperature_2m_max'][0];
+  temperature_min: ForecastData['daily']['temperature_2m_min'][0];
+  wind_direction: ForecastData['daily']['wind_direction_10m_dominant'][0];
+  wind_speed: ForecastData['daily']['wind_speed_10m_max'][0];
   units: ForecastData['daily_units'];
+  isToday: boolean;
+};
+
+type WeatherResult = {
+  current: WeatherData & { backgroundImage?: string };
+  daily: ForecastCardData[];
 };
 
 export {
+  type WeatherResult,
   type ForecastCardData,
   type WeatherData,
   type Location,

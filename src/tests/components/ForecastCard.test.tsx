@@ -5,19 +5,17 @@ import transformForecastData from 'src/utils/transformForecastData';
 import componentSetup from '../utils/componentSetup';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 import '@testing-library/jest-dom';
-import { ForecastCardData } from 'src/types';
 import { img } from 'src/constants/ForecastCard';
+import locationDataMock from 'src/mocks/locationDataMock';
+import indexRows from '../utils/indexRows';
+
+const transformedDataMock = transformForecastData(
+  forecastMock,
+  locationDataMock[0]
+).daily;
 
 function setup(index: number) {
-  return componentSetup(
-    <ForecastCard data={transformForecastData(forecastMock)[index]} />
-  );
-}
-
-const transformedDataMock = transformForecastData(forecastMock);
-
-function indexRows(table: ForecastCardData[]) {
-  return table.map((value, index) => ({ ...value, index: index }));
+  return componentSetup(<ForecastCard data={transformedDataMock[index]} />);
 }
 
 const indexedData = indexRows(transformedDataMock);

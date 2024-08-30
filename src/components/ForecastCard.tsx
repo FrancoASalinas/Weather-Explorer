@@ -6,7 +6,7 @@ function ForecastCard({ data }: { data: ForecastCardData }) {
   const weatherDescription = weatherDescriptions[`${data.weather_code}`].day;
 
   return (
-    <div className='forecast-card' data-testid={card.testid}>
+    <div className={data.isToday ? 'forecast-card--today' : 'forecast-card'} data-testid={card.testid}>
       <span className='forecast-card__date'>{data.time}</span>
       <img
         className='forecast-card__icon'

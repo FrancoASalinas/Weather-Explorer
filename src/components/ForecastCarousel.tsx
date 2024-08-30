@@ -1,13 +1,12 @@
-import transformForecastData from 'src/utils/transformForecastData';
-import { ForecastData } from 'src/types';
+import { WeatherResult } from 'src/types';
 import ForecastCard from 'src/components/ForecastCard';
 import { carousel } from 'src/constants/ForecastCarousel';
 
-function ForecastCarousel({ forecastData }: { forecastData: ForecastData }) {
+function ForecastCarousel({ forecastData }: { forecastData: WeatherResult }) {
   return (
     <div className='forecast-carousel' data-testid={carousel.testid}>
-      {transformForecastData(forecastData).map(data => (
-        <ForecastCard data={data} />
+      {forecastData.daily.map(data => (
+        <ForecastCard data={data} key={data.time}/>
       ))}
     </div>
   );

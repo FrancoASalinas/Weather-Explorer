@@ -1,6 +1,6 @@
 @import '/src/styles/forecast.css';
 
-.forecast-card {
+.forecast-card, .forecast-card--today {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +10,11 @@
   height: var(--size-10);
   padding: var(--size-2) var(--size-3);
   color: var(--primary-100);
+}
+
+.forecast-card--today {
+  background-color: var(--primary-700);
+  border-radius: var(--border-radius-6);
 }
 
 .forecast-card__temperature {

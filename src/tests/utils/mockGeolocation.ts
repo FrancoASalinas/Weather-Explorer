@@ -1,10 +1,10 @@
-import userLocationMock from '../../mocks/userLocationMock';
+import locationDataMock from 'src/mocks/locationDataMock';
 
+const { lat, lon, name } = locationDataMock[0];
 function mockGeolocation() {
-  const { latitude, longitude } = userLocationMock;
   const geolocation = {
     getCurrentPosition: vi.fn(success =>
-      success({ coords: { latitude, longitude } })
+      success({ coords: { latitude: lat, longitude: lon } })
     ),
   };
 
@@ -14,3 +14,4 @@ function mockGeolocation() {
   });
 }
 export default mockGeolocation;
+export const locationName = name;

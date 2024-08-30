@@ -1,8 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
 import locationDataMock from './locationDataMock';
-import weatherDataList from './weatherDataMock';
-import userLocationMock from './userLocationMock';
-import userWeatherMock from './userWeatherMock';
 import forecastMock from './forecastMock';
 
 export const handlers = [
@@ -24,24 +21,20 @@ export const handlers = [
     }
   ),
   http.get(
-    'https://api.openweathermap.org/data/2.5/weather',
+    'http://api.openweathermap.org/geo/1.0/reverse',
     async ({ request }) => {
       const url = new URL(request.url);
-      const lat = Number(url.searchParams.get('lat'));
+      const lat = url.searchParams.get('lat');
+      const lon = url.searchParams.get('lon');
 
-      await delay(500);
+      await delay(400);
 
-      for (let i = 0; i < locationDataMock.length; i++) {
-        if (lat === locationDataMock[i].lat) {
-          return HttpResponse.json(weatherDataList[i]);
-        }
-
-        if (lat === userLocationMock.latitude) {
-          return HttpResponse.json(userWeatherMock);
-        }
-      }
-
-      console.error('Error getting weather for location');
+      locationDataMock.map(
+        location =>
+          lat === location.lat.toString() &&
+          lon === location.lon.toString() &&
+          HttpResponse.json([location])
+      );
     }
   ),
   http.get('https://api.open-meteo.com/v1/forecast', async () => {
