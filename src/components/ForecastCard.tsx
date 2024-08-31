@@ -1,12 +1,31 @@
+import { useEffect, useRef } from 'react';
 import { card, img } from 'src/constants/ForecastCard';
 import { ForecastCardData } from 'src/types';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 
 function ForecastCard({ data }: { data: ForecastCardData }) {
   const weatherDescription = weatherDescriptions[`${data.weather_code}`].day;
+  const todayCardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let isScrolledOnce = false;
+    if (todayCardRef.current && !isScrolledOnce) {
+      todayCardRef.current.scrollIntoView &&
+        todayCardRef.current.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'end',
+        });
+      isScrolledOnce = true;
+    }
+  });
 
   return (
-    <div className={data.isToday ? 'forecast-card--today' : 'forecast-card'} data-testid={card.testid}>
+    <div
+      ref={data.isToday ? todayCardRef : undefined}
+      className={data.isToday ? 'forecast-card--today' : 'forecast-card'}
+      data-testid={card.testid}
+    >
       <span className='forecast-card__date'>{data.time}</span>
       <img
         className='forecast-card__icon'

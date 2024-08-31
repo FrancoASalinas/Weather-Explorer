@@ -2,10 +2,7 @@ import forecastMock from 'src/mocks/forecastMock';
 import locationDataMock from 'src/mocks/locationDataMock';
 import formatDate from 'src/utils/formatDate';
 import getBackgroundImage from 'src/utils/getBackgroundImage';
-import transformForecastData, {
-  getCurrentPrecipitation,
-  getIsToday,
-} from 'src/utils/transformForecastData';
+import transformForecastData from 'src/utils/transformForecastData';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 
 it('Should transform daily object into an array of data mapped for every date', async () => {
@@ -14,7 +11,7 @@ it('Should transform daily object into an array of data mapped for every date', 
     locationDataMock[0]
   );
 
-  expect(transformedDataMock).toEqual({
+  const expectedResult = {
     current: {
       weather: {
         id: forecastMock.current.weather_code,
@@ -38,7 +35,7 @@ it('Should transform daily object into an array of data mapped for every date', 
         forecastMock.current.weather_code,
         forecastMock.current.is_day === 1
       ),
-      precipitation_probability: getCurrentPrecipitation(forecastMock),
+      precipitation_probability: 20,
     },
     daily: forecastMock.daily.time.map((time, index) => ({
       time: formatDate(time),
@@ -48,9 +45,11 @@ it('Should transform daily object into an array of data mapped for every date', 
       wind_speed: forecastMock.daily.wind_speed_10m_max[index],
       wind_direction: forecastMock.daily.wind_direction_10m_dominant[index],
       units: forecastMock.daily_units,
-      isToday: getIsToday(time),
+      isToday: index === 7,
       precipitation_probability_max:
         forecastMock.daily.precipitation_probability_max[index],
     })),
-  });
+  };
+
+  expect(transformedDataMock).toEqual(expectedResult);
 });
