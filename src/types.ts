@@ -1,17 +1,3 @@
-type WeatherData = {
-  weather: { id: number; description: string; icon: string };
-  main: {
-    temp: number;
-    humidity: number;
-  };
-  precipitation_probability: number;
-  wind: {
-    speed: number;
-    deg: number;
-  };
-  name: string;
-};
-
 type Location = {
   name: string;
   local_names: { [key: string | 'ascii' | 'feature_name']: string };
@@ -89,15 +75,8 @@ type ForecastCardData = {
   isToday: boolean;
 };
 
-type WeatherResult = {
-  current: WeatherData & { backgroundImage?: string };
-  daily: ForecastCardData[];
-};
-
 export {
-  type WeatherResult,
   type ForecastCardData,
-  type WeatherData,
   type Location,
   type UserLocationData,
   type Layer,

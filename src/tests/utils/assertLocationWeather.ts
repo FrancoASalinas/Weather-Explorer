@@ -1,14 +1,14 @@
 import { screen, within } from '@testing-library/react';
 import { testId } from '../../constants/LocationWeather';
-import { WeatherData } from '../../types';
+import { Forecast } from 'src/utils/transformForecastData';
 
-async function assertLocationWeather(weatherData: WeatherData) {
+async function assertLocationWeather(weatherData: Forecast['current']) {
   const location = await screen.findByTestId(testId, {}, { timeout: 6000 });
   const { weather, main, precipitation_probability, wind } = weatherData;
   const entries = [
     `${main.temp}ºC`,
     `${main.humidity}%`,
-    `${wind.speed}m/s`,
+    `${wind.speed}km/h`,
     `${wind.deg}º`,
   ];
 

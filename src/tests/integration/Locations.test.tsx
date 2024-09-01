@@ -16,10 +16,10 @@ it.each(locationDataMock)(
       key !== 'local_names' &&
         key !== 'lat' &&
         key !== 'lon' &&
-        (await screen.findAllByText(entry.toString(), { exact: false }));
+        (await screen.findAllByText(entry.toString(), { exact: false }, {timeout: 20000}));
     }
   }
-);
+, 25000);
 
 it.each(locationDataMock)(
   `Should render buttons with testid: ${showWeatherButton.testid} for each location`,

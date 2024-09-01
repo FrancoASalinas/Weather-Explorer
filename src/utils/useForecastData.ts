@@ -1,7 +1,7 @@
-import { ForecastData, Location, WeatherResult } from 'src/types';
+import { ForecastData, Location } from 'src/types';
 import useFetch from './useFetch';
 import { useEffect, useState } from 'react';
-import transformForecastData from './transformForecastData';
+import transformForecastData, { Forecast } from './transformForecastData';
 import API_KEY from './API_KEY';
 
 function useForecastData(
@@ -25,7 +25,7 @@ function useForecastData(
         }&limit=${1}&appid=${API_KEY}`
       : null
   );
-  const [result, setResult] = useState<WeatherResult>();
+  const [result, setResult] = useState<Forecast>();
   const [error, setError] = useState<typeof forecastError>();
 
   useEffect(() => {

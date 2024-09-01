@@ -1,29 +1,33 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { card, img } from 'src/constants/ForecastCard';
 import { ForecastCardData } from 'src/types';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
 
-function ForecastCard({ data }: { data: ForecastCardData }) {
+function ForecastCard({
+  data,
+  onClick,
+  isSelected,
+}: {
+  data: ForecastCardData;
+  onClick: (data: ForecastCardData) => void;
+  isSelected: boolean;
+}) {
   const weatherDescription = weatherDescriptions[`${data.weather_code}`].day;
-  const todayCardRef = useRef<HTMLDivElement>(null);
+  const selectedCardRef = useRef<HTMLDivElement>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    let isScrolledOnce = false;
-    if (todayCardRef.current && !isScrolledOnce) {
-      todayCardRef.current.scrollIntoView &&
-        todayCardRef.current.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'end',
-        });
-      isScrolledOnce = true;
+    if (selectedCardRef.current && !isScrolled) {
+      scrollToCard(selectedCardRef.current);
+      setIsScrolled(true);
     }
   });
 
   return (
     <div
-      ref={data.isToday ? todayCardRef : undefined}
-      className={data.isToday ? 'forecast-card--today' : 'forecast-card'}
+      onClick={() => onClick(data)}
+      ref={data.isToday ? selectedCardRef : undefined}
+      className={isSelected ? 'forecast-card--selected' : 'forecast-card'}
       data-testid={card.testid}
     >
       <span className='forecast-card__date'>{data.time}</span>
@@ -46,6 +50,15 @@ function ForecastCard({ data }: { data: ForecastCardData }) {
       </div>
     </div>
   );
+}
+
+function scrollToCard(cardElementRef: HTMLDivElement) {
+  cardElementRef.scrollIntoView &&
+    cardElementRef.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'center',
+      block: 'end',
+    });
 }
 
 export default ForecastCard;
