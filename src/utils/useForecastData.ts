@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import transformForecastData, { Forecast } from './transformForecastData';
 import API_KEY from './API_KEY';
 
+
+
 function useForecastData(
   coords: { lat: number; lon: number } | null,
-  locationData?: Location
-) {
+  locationData?: Location) {
   const [location, setLocation] = useState(locationData);
   const [forecast, forecastError] = useFetch<ForecastData>(
     coords

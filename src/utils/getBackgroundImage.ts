@@ -1,13 +1,13 @@
-import thunderstorm from '../assets/thunderstorm.jpg';
-import rain from '../assets/rain.jpg';
-import snow from '../assets/thunderstorm.jpg';
-import mist from '../assets/mist.jpg';
-import clearSky from '../assets/clear-sky-2.jpg';
-import clearSkyNight from '../assets/clear-sky-night.jpg';
-import snowNight from '../assets/snow-night.jpg';
-import cloudyNight from '../assets/cloudy-night.jpg';
-import brokenClouds from '../assets/broken-clouds.jpg';
-import cloudy from '../assets/cloudy.jpg';
+import thunderstorm from 'src/assets/weatherBackgrounds/thunderstorm.jpg';
+import rain from 'src/assets/weatherBackgrounds/rain.jpg';
+import snow from 'src/assets/weatherBackgrounds/thunderstorm.jpg';
+import mist from 'src/assets/weatherBackgrounds/mist.jpg';
+import clearSky from 'src/assets/weatherBackgrounds/clear-sky-2.jpg';
+import clearSkyNight from 'src/assets/weatherBackgrounds/clear-sky-night.jpg';
+import snowNight from 'src/assets/weatherBackgrounds/snow-night.jpg';
+import cloudyNight from 'src/assets/weatherBackgrounds/cloudy-night.jpg';
+import brokenClouds from 'src/assets/weatherBackgrounds/broken-clouds.jpg';
+import cloudy from 'src/assets/weatherBackgrounds/cloudy.jpg';
 
 function getBackgroundImage(weatherCode: number, isDay: boolean) {
   const images = [

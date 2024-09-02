@@ -39,18 +39,34 @@
   box-shadow: 0 6px 3px -4px #859ba8;
 }
 
-.locations__location__button {
+.locations__location__button,
+.locations__location__button--toggle {
   width: max-content;
-  background-color: var(--primary-600);
+  background-color: #0000;
   color: var(--primary-100);
   padding: var(--size-2);
   font-size: var(--font-size-2);
   border-radius: var(--border-radius-3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.locations__location__button:hover {
-  background-color: var(--primary-700);
+.locations__location__button:hover,
+.locations__location__button--toggle:hover {
   cursor: pointer;
+}
+
+.locations__location__button svg,
+.locations__location__button--toggle svg {
+  fill: var(--primary-700);
+  width: var(--size-4);
+  height: auto;
+  transition: 200ms;
+}
+
+.locations__location__button--toggle svg {
+  transform: rotate(90deg);
 }
 
 .locations__location__name {
