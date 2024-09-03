@@ -36,9 +36,10 @@ it(`Should render weather`, async () => {
   await assertLocationWeather(forecastDataMock.current);
 }, 30000);
 
-it.each(forecastDataMock.daily)(
-  'Should render the weather for the selected card',
-  async ({
+it('Should render the weather for every selected card', async () => {
+  const { user } = setup();
+
+  for (let {
     precipitation_probability_max,
     temperature_max,
     time,
@@ -46,38 +47,29 @@ it.each(forecastDataMock.daily)(
     wind_speed,
     units,
     isToday,
-  }) => {
-    const { user } = setup();
-    const card = await screen.findByText(time, {}, { timeout: 20000 });
+  } of forecastDataMock.daily) {
+    const card = await screen.findByText(time);
 
     await user.click(card);
+    console.log(`clicked card with date: ${time}`);
 
     await screen.findByText(
       `${
         isToday
           ? forecastDataMock.current.precipitation_probability
           : precipitation_probability_max
-      }${units.precipitation_probability_max}`,
-      {},
-      { timeout: 20000 }
+      }${units.precipitation_probability_max}`
     );
     await screen.findByText(
-      `${isToday ? forecastDataMock.current.main.temp : temperature_max}ºC`,
-      {},
-      { timeout: 20000 }
+      `${isToday ? forecastDataMock.current.main.temp : temperature_max}ºC`
     );
     await screen.findByText(
-      `${isToday ? forecastDataMock.current.wind.deg : wind_direction}º`,
-      {},
-      { timeout: 20000 }
+      `${isToday ? forecastDataMock.current.wind.deg : wind_direction}º`
     );
     await screen.findByText(
       `${isToday ? forecastDataMock.current.wind.speed : wind_speed}${
         units.wind_speed_10m_max
-      }`,
-      {},
-      { timeout: 20000 }
+      }`
     );
-  },
-  24000
-);
+  }
+}, 30000);

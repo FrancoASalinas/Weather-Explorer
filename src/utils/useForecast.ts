@@ -24,7 +24,7 @@ function useForecast(
       _setForecast(_forecastData);
       setIsDataChanged(false);
     }
-  }, [_forecastData, forecast]);
+  }, [_forecastData, forecast, isDataChanged]);
 
   return [forecast, setForecast, forecastError] as const;
 }

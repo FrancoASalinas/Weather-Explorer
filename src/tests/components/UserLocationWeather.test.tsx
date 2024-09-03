@@ -11,7 +11,7 @@ it(`Should render nav link: ${nav.currentLocation.text}`, async () => {
   ).toBeGreaterThan(0);
 });
 
-it.only(`Clicking the link should get user to the current location weather`, async () => {
+it(`Clicking the link should get user to the current location weather`, async () => {
   const { user } = setup('/map');
   await user.click((await screen.findAllByText(nav.currentLocation.text))[0]);
 

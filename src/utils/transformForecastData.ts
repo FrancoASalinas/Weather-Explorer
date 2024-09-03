@@ -17,22 +17,23 @@ class CurrentForecast {
   }
 }
 
-class Forecast {
-  readonly _data: ForecastData;
-  readonly _location: Location;
-  private _current: CurrentForecast;
-  readonly _daily: ForecastCardData[];
-  public current;
-  public daily;
-
-  constructor(
-    data: ForecastData,
-    location: Location,
-    current?: ForecastCardData
-  ) {
+class Daily {
+  _data: ForecastData;
+  constructor(data: ForecastData) {
     this._data = data;
-    this._location = location;
-    this._daily = data.daily.time.map((date, index) => {
+  }
+
+  get data() {
+    return this._formatData(this._data);
+  }
+
+  private _isToday(date: string) {
+    const today = new Date().getDate();
+    return today === new Date(date).getUTCDate();
+  }
+
+  private _formatData(data: ForecastData) {
+    return data.daily.time.map((date, index) => {
       const {
         temperature_2m_max,
         temperature_2m_min,
@@ -53,22 +54,31 @@ class Forecast {
         isToday: this._isToday(date),
       };
     });
+  }
+}
+
+class Forecast {
+  readonly _data: ForecastData;
+  readonly _location: Location;
+  private _current: CurrentForecast;
+  readonly _daily: ForecastCardData[];
+  public daily;
+
+  constructor(data: ForecastData, location: Location) {
+    this._data = data;
+    this._location = location;
+    this._daily = new Daily(data).data;
     this._current = new CurrentForecast(
-      current ||
-        this._daily.find(({ isToday }) => isToday === true) ||
-        this._daily[7]
+      this._daily.find(({ isToday }) => isToday === true) || this._daily[7]
     );
-    (this.current = this._currentWeather), (this.daily = this._daily);
+    this.daily = this._daily;
+  }
+  public get current() {
+    return this._currentWeather;
   }
 
   public setCurrent(newCurrent: ForecastCardData) {
     this._current = new CurrentForecast(newCurrent);
-    this.current = this._currentWeather;
-  }
-
-  private _isToday(date: string) {
-    const today = new Date().getDate();
-    return today === new Date(date).getUTCDate();
   }
 
   private get _currentPrecipitation() {
