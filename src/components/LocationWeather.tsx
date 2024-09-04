@@ -20,15 +20,19 @@ export default function LocationWeather({
     setForecast(cardData);
   }
 
-  return isLoading ? (
-    <LoadingIndicator />
-  ) : (
-    <div className={className} data-testid={testId}>
-      <Weather weatherData={forecast?.current as Forecast['current']} />
-      <ForecastCarousel
-        forecastData={forecast as Forecast}
-        onCardClick={handleCardClick}
-      />
+  return (
+    <div className={isLoading ? `${className}--loading` :className} data-testid={testId}>
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        <>
+          <Weather weatherData={forecast?.current as Forecast['current']} />
+          <ForecastCarousel
+            forecastData={forecast as Forecast}
+            onCardClick={handleCardClick}
+          />
+        </>
+      )}
     </div>
   );
 }

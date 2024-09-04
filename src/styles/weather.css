@@ -1,19 +1,22 @@
 @import '/src/styles/variables.css';
 
 .weather--user,
-.weather--location {
+.weather--location,
+.weather--user--loading,
+.weather--location--loading {
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(2, 128px);
-  grid-template-rows: var(--size-9) repeat(3, 50px) auto;
+  grid-template-rows: minmax(var(--size-9), var(--size-10)) repeat(3, 50px) auto;
   grid-template-areas:
     'name icon'
     'desc desc'
-    'temp humid'
-    'wind precipitation'
+    'temp precipitation'
+    'wind humid'
     'forecast forecast';
   row-gap: var(--size-2);
   column-gap: var(--size-7);
+  min-height: 486px;
   align-items: start;
   height: 100%;
   width: 100%;
@@ -22,6 +25,13 @@
   overflow: hidden;
   color: var(--primary-100);
   text-shadow: 0 0 3px var(--primary-900);
+}
+
+.weather--user--loading,
+.weather--location--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .weather--user {
@@ -34,7 +44,6 @@
   margin: 0 auto;
 }
 
-.weather--user__name,
 .weather__data {
   display: flex;
   position: relative;
@@ -44,18 +53,10 @@
   justify-content: start;
   text-align: center;
   z-index: 100;
-}
-
-.weather__data {
   font-size: var(--font-size-3);
 }
 
-.weather__data .weather__data__icon {
-  height: 100%;
-  width: auto;
-}
-
-.weather--user__name {
+.weather__data--name {
   font-size: var(--font-size-8);
   font-family: var(--font-headline);
   grid-area: name;
@@ -64,13 +65,12 @@
   justify-self: center;
 }
 
-.weather__description {
+.weather__data--description {
   grid-area: desc;
   z-index: 200;
   justify-self: center;
   width: fit-content;
   font-size: var(--font-size-5);
-  margin-top: calc(var(--size-4) * -1);
 }
 
 .weather__icon {
@@ -81,22 +81,51 @@
   justify-self: end;
 }
 
-.weather__temp {
+.weather__data--temp {
   grid-area: temp;
 }
 
-.weather__humidity {
+.weather__data--humidity {
   grid-area: humid;
   justify-content: space-between;
   flex-grow: 0.5;
 }
 
-.weather__precipitation {
+.weather__data--precipitation {
   grid-area: precipitation;
   justify-content: space-between;
 }
-.weather__wind {
+
+.weather__data--wind {
   grid-area: wind;
+}
+
+.weather__data__icon {
+  height: 100%;
+  width: auto;
+}
+
+.weather__data__icon--temperature {
+  fill: none;
+  stroke: var(--primary-300);
+  stroke-opacity: 1;
+}
+
+.weather__data__icon--humidity {
+  fill: var(--primary-300);
+  fill-opacity: 1;
+}
+
+.weather__data__icon--precipitation {
+  fill: var(--primary-300);
+  fill-opacity: 1;
+}
+
+.weather__data__icon--wind {
+  stroke: var(--primary-300);
+  stroke-opacity: 1;
+  fill: none;
+  flex-shrink: 0;
 }
 
 .weather__background-image {
@@ -106,7 +135,7 @@
   top: 0;
   left: 0;
   z-index: 50;
-  background-color: var(--primary-200);
+  background-color: var(--primary-500);
 }
 
 .weather__background-image img {
@@ -115,5 +144,5 @@
   width: 100%;
   height: 100%;
   mix-blend-mode: multiply;
-  filter: contrast(0.4) saturate(0.6);
+  filter: contrast(0.4) saturate(0.5);
 }

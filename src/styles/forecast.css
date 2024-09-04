@@ -17,7 +17,7 @@
 }
 
 .forecast-card--selected {
-  background-color: var(--primary-700);
+  background-color: var(--primary-900);
   border-radius: var(--border-radius-6);
 }
 
@@ -70,7 +70,7 @@
 }
 
 .forecast-carousel::-webkit-scrollbar-thumb {
-  background-color: var(--primary-800);
+  background-color: var(--primary-900);
   border-radius: var(--border-radius-6);
 }
 
@@ -80,14 +80,13 @@
   }
 
   .forecast-carousel::-webkit-scrollbar-thumb {
-    background-color: var(--primary-800);
     border-radius: var(--border-radius-6);
     background-clip: padding-box;
     border: 3px solid #0000;
   }
 
   .forecast-carousel::-webkit-scrollbar-track {
-    background: var(--primary-700);
+    background: var(--primary-800);
     border-radius: var(--border-radius-6);
   }
 }
