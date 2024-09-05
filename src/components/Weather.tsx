@@ -5,7 +5,13 @@ import Temperature from 'src/assets/icons/temperature-icon.svg?react';
 import Humidity from 'src/assets/icons/humidity-icon.svg?react';
 import Precipitation from 'src/assets/icons/precipitation-icon.svg?react';
 
-function Weather({ weatherData }: { weatherData: Forecast['current'] }) {
+function Weather({
+  weatherData,
+  onImageLoad,
+}: {
+  weatherData: Forecast['current'];
+  onImageLoad: () => void;
+}) {
   const {
     weather,
     main,
@@ -20,7 +26,7 @@ function Weather({ weatherData }: { weatherData: Forecast['current'] }) {
       {backgroundImage && (
         <>
           <div className='weather__background-image'>
-            <img src={backgroundImage} />
+            <img src={backgroundImage} onLoad={onImageLoad} data-testid='weather-background-image'/>
           </div>
         </>
       )}
@@ -46,7 +52,7 @@ function Weather({ weatherData }: { weatherData: Forecast['current'] }) {
       <div className='weather__data weather__data--wind'>
         <Wind className='weather__data__icon weather__data__icon--wind' />
         <div className=''>
-        <span>{wind.speed}km/h</span> <span>{wind.deg}º</span>
+          <span>{wind.speed}km/h</span> <span>{wind.deg}º</span>
         </div>
       </div>
     </>

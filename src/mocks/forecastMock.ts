@@ -2,6 +2,13 @@ import { ForecastData } from '../types';
 
 const today = new Date();
 
+const todayDate = {
+  formatted: `${today.getUTCDate()}/${today.getMonth() + 1}`,
+  notFormatted: `${today.getFullYear()}-${today.getMonth() + 1 > 10 ? '' : 0}${
+    today.getMonth() + 1
+  }-${today.getUTCDate()}`,
+};
+
 const forecastMock: ForecastData = {
   latitude: -46.6388,
   longitude: -23.5482,
@@ -43,10 +50,7 @@ const forecastMock: ForecastData = {
       '2024-08-11',
       '2024-08-12',
       '2024-08-13',
-      `${today.getFullYear()}-${today.getMonth() + 1 > 10 ? '' : 0}${
-        today.getMonth() + 1
-      }-${today.getUTCDate()}`,
-
+      todayDate.notFormatted,
       '2024-08-15',
       '2024-08-16',
       '2024-08-17',
@@ -213,7 +217,7 @@ const expectedDaily = [
   },
   {
     precipitation_probability_max: 20,
-    time: '3/9',
+    time: todayDate.formatted,
     weather_code: 61,
     temperature_max: 32.7,
     temperature_min: 17.8,
