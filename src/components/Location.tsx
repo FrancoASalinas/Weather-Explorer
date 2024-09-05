@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Location as LocationType } from '../types';
 import LocationWeather from './LocationWeather';
 import { showWeatherButton } from '../constants/Location';
@@ -6,13 +6,20 @@ import { showWeatherButton } from '../constants/Location';
 function Location({ location }: { location: LocationType }) {
   const { lat, lon, name, country, state } = location;
   const [isToggle, setIsToggle] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref?.current && ref.current.scrollIntoView && isToggle) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [isToggle]);
 
   async function handleLocationClick() {
     setIsToggle(prev => !prev);
   }
 
   return (
-    <div data-testid={lat + lon} className='locations__location'>
+    <div data-testid={lat + lon} className='locations__location' ref={ref}>
       <div
         className={`locations__location__main ${
           isToggle && 'locations__location__main--toggle'
