@@ -11,7 +11,7 @@ function setup(
   coords = { lat: locationDataMock[0].lat, lon: locationDataMock[0].lon }
 ) {
   const { lat, lon } = coords;
-  return componentSetup(<LocationWeather className='' coords={{ lat, lon }} />);
+  return componentSetup(<LocationWeather coords={{ lat, lon }} />);
 }
 
 const forecastDataMock = transformForecastData(

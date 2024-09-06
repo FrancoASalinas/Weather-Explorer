@@ -5,16 +5,15 @@ function UserLocationWeather() {
   const [userLocation, error] = useUserLocation();
 
   return (
-    <>
+    <div className='user-location'>
       {userLocation ? (
         <LocationWeather
-          className='weather--user'
-          coords={{ lat: userLocation.latitude, lon: userLocation.longitude }}
+        coords={{ lat: userLocation.latitude, lon: userLocation.longitude }}
         />
       ) : (
         error && <h2>Error: {error.message}</h2>
       )}
-    </>
+      </div>
   );
 }
 

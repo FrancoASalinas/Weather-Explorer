@@ -15,7 +15,13 @@ const transformedDataMock = transformForecastData(
 ).daily;
 
 function setup(index: number) {
-  return componentSetup(<ForecastCard data={transformedDataMock[index]} />);
+  return componentSetup(
+    <ForecastCard
+      data={transformedDataMock[index]}
+      isSelected={false}
+      onClick={() => {}}
+    />
+  );
 }
 
 const indexedData = indexRows(transformedDataMock);

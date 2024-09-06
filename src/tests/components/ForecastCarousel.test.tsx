@@ -9,6 +9,7 @@ it('Should render 15 forecast cards', async () => {
   render(
     <ForecastCarousel
       forecastData={transformForecastData(forecastMock, locationDataMock[0])}
+      onCardClick={() => {}}
     />
   );
 

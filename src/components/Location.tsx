@@ -1,17 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { Location as LocationType } from '../types';
-import LocationWeather from './LocationWeather';
-import { showWeatherButton } from '../constants/Location';
+import { Location as LocationType } from 'src/types';
+import LocationWeather from 'src/components/LocationWeather';
+import { showWeatherButton } from 'src/constants/Location';
+import Angle from 'src/assets/icons/right-angle.svg?react';
 
 function Location({ location }: { location: LocationType }) {
   const { lat, lon, name, country, state } = location;
   const [isToggle, setIsToggle] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  function scrollIntoView() {
     if (ref?.current && ref.current.scrollIntoView && isToggle) {
       ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
+  }
+
+  useEffect(() => {
+    scrollIntoView();
   }, [isToggle]);
 
   async function handleLocationClick() {
@@ -40,14 +45,10 @@ function Location({ location }: { location: LocationType }) {
           onClick={handleLocationClick}
           data-testid={showWeatherButton.testid}
         >
-          <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'>
-            <path d='M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z' />
-          </svg>
+          <Angle />
         </button>
       </div>
-      {isToggle && (
-        <LocationWeather className='weather--location' coords={{ lat, lon }} />
-      )}
+      {isToggle && <LocationWeather coords={{ lat, lon }} />}
     </div>
   );
 }

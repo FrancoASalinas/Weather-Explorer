@@ -8,15 +8,13 @@ import Weather from './Weather';
 import { useState } from 'react';
 
 export default function LocationWeather({
-  className,
   coords,
 }: {
-  className: string;
   coords: { lat: number; lon: number };
 }) {
   const [forecast, setForecast, error] = useForecast(coords);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
-  const isLoading = !forecast && !error && isLoadingImage;
+  const isLoading = !forecast && !error;
 
   function handleCardClick(cardData: ForecastCardData) {
     setForecast(cardData);
@@ -24,7 +22,7 @@ export default function LocationWeather({
 
   return (
     <div
-      className={isLoading ? `${className}--loading` : className}
+      className={isLoading || isLoadingImage ? `weather--loading` : 'weather'}
       data-testid={testId}
     >
       {isLoading ? (
@@ -35,10 +33,12 @@ export default function LocationWeather({
             weatherData={forecast?.current as Forecast['current']}
             onImageLoad={() => setIsLoadingImage(false)}
           />
-          <ForecastCarousel
-            forecastData={forecast as Forecast}
-            onCardClick={handleCardClick}
-          />
+          {!isLoadingImage && (
+            <ForecastCarousel
+              forecastData={forecast as Forecast}
+              onCardClick={handleCardClick}
+            />
+          )}
         </>
       )}
     </div>

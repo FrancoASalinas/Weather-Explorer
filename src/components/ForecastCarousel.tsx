@@ -56,6 +56,8 @@ const scrollIntoViewHorizontally = (
   const childOffsetRight = child.offsetLeft + child.offsetWidth;
   const containerScrollRight = container.scrollLeft + container.offsetWidth;
 
+  console.log(childOffsetRight, containerScrollRight);
+
   if (container.scrollLeft > child.offsetLeft) {
     container.scrollLeft = child.offsetLeft;
   } else if (containerScrollRight < childOffsetRight) {
