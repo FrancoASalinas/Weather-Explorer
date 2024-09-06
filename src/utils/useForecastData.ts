@@ -21,7 +21,7 @@ function useForecastData(
   );
   const [newLocation, newLocationError] = useFetch<Location[]>(
     !location && coords
-      ? `http://api.openweathermap.org/geo/1.0/reverse?lat=${coords.lat}&lon=${
+      ? `https://api.openweathermap.org/geo/1.0/reverse?lat=${coords.lat}&lon=${
           coords.lon
         }&limit=${1}&appid=${API_KEY}`
       : null
