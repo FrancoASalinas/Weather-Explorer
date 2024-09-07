@@ -29,12 +29,10 @@ function ForecastCard({
       <div className='forecast-card__temperature'>
         <span className='forecast-card__temperature__max'>
           {data.temperature_max}
-          {data.units.temperature_2m_max}
         </span>
         <div className='forecast-card__temperature__divisor'></div>
         <span className='forecast-card__temperature__min'>
           {data.temperature_min}
-          {data.units.temperature_2m_min}
         </span>
       </div>
     </div>

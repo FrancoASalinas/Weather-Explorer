@@ -44,19 +44,15 @@ it('Should change current data when setting current field', async () => {
 
     expect(transformedData.current).toEqual({
       weather: {
-        id: weatherCode,
         description,
         icon,
       },
       main: {
-        temp: isToday ? forecastMock.current.temperature_2m : temperature_max,
-        humidity: isToday
-          ? forecastMock.current.relative_humidity_2m
-          : undefined,
+        temp: isToday ? expectedCurrent.main.temp : temperature_max,
       },
       wind: {
-        speed: isToday ? forecastMock.current.wind_speed_10m : wind_speed,
-        deg: isToday ? forecastMock.current.wind_direction_10m : wind_direction,
+        speed: isToday ? expectedCurrent.wind.speed : wind_speed,
+        deg: isToday ? expectedCurrent.wind.deg : wind_direction,
       },
       name: locationDataMock[0].name,
       backgroundImage: getBackgroundImage(

@@ -6,10 +6,9 @@ async function assertLocationWeather(weatherData: Forecast['current']) {
   const location = await screen.findByTestId(testId, {}, { timeout: 6000 });
   const { weather, main, precipitation_probability, wind } = weatherData;
   const entries = [
-    `${main.temp}ºC`,
-    `${main.humidity}%`,
-    `${wind.speed}km/h`,
-    `${wind.deg}º`,
+    main.temp,
+    wind.speed,
+    wind.deg,
   ];
 
   for (const entry of entries) {
@@ -17,13 +16,13 @@ async function assertLocationWeather(weatherData: Forecast['current']) {
   }
 
   await within(location).findByText(
-    `${weather.description}`,
+    weather.description,
     {},
     { timeout: 5000 }
   );
 
   await within(location).findByText(
-    `${precipitation_probability}%`,
+    precipitation_probability,
     {},
     { timeout: 5000 }
   );

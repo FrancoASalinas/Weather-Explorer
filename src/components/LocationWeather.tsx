@@ -25,9 +25,8 @@ export default function LocationWeather({
       className={isLoading || isLoadingImage ? `weather--loading` : 'weather'}
       data-testid={testId}
     >
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : (
+      {(isLoading || isLoadingImage) && <LoadingIndicator />}
+      {!isLoading && (
         <>
           <Weather
             weatherData={forecast?.current as Forecast['current']}

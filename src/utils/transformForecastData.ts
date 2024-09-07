@@ -19,8 +19,10 @@ class CurrentForecast {
 
 class Daily {
   _data: ForecastData;
+  _units: ForecastData['daily_units'];
   constructor(data: ForecastData) {
     this._data = data;
+    this._units = data.daily_units;
   }
 
   get data() {
@@ -28,8 +30,13 @@ class Daily {
   }
 
   private _isToday(date: string) {
-    const today = new Date().getDate();
-    return today === new Date(date).getUTCDate();
+    const today = new Date();
+    const newDate = new Date(date);
+
+    return (
+      today.getDate() === newDate.getUTCDate() &&
+      today.getMonth() === newDate.getUTCMonth()
+    );
   }
 
   private _formatData(data: ForecastData) {
@@ -43,14 +50,13 @@ class Daily {
         precipitation_probability_max,
       } = this._data.daily;
       return {
-        precipitation_probability_max: precipitation_probability_max[index],
+        precipitation_probability_max: `${precipitation_probability_max[index]}${this._units.precipitation_probability_max}`,
         time: formatDate(date),
         weather_code: weather_code[index],
-        temperature_max: temperature_2m_max[index],
-        temperature_min: temperature_2m_min[index],
-        wind_direction: wind_direction_10m_dominant[index],
-        wind_speed: wind_speed_10m_max[index],
-        units: data.daily_units,
+        temperature_max: `${temperature_2m_max[index]}${this._units.temperature_2m_max}`,
+        temperature_min: `${temperature_2m_min[index]}${this._units.temperature_2m_min}`,
+        wind_direction: `${wind_direction_10m_dominant[index]}${this._units.wind_direction_10m_dominant}`,
+        wind_speed: `${wind_speed_10m_max[index]} ${this._units.wind_speed_10m_max}`,
         isToday: this._isToday(date),
       };
     });
@@ -85,48 +91,75 @@ class Forecast {
     return this._current.data.precipitation_probability_max;
   }
 
+  private get _isToday() {
+    return this._current.data.isToday;
+  }
+
+  private get _description() {
+    return weatherDescriptions[
+      this._isToday
+        ? this._data.current.weather_code
+        : this._current.data.weather_code
+    ].day.description;
+  }
+
+  private get _icon() {
+    return weatherDescriptions[
+      this._isToday
+        ? this._data.current.weather_code
+        : this._current.data.weather_code
+    ][
+      this._isToday
+        ? this._data.current.is_day === 1
+          ? 'day'
+          : 'night'
+        : 'day'
+    ].image;
+  }
+
+  private get _temp() {
+    return this._isToday
+      ? `${this._data.current.temperature_2m}${this._data.daily_units.temperature_2m_max}`
+      : this._current.data.temperature_max;
+  }
+
+  private get _windSpeed() {
+    return this._isToday
+      ? `${this._data.current.wind_speed_10m} ${this._data.daily_units.wind_speed_10m_max}`
+      : this._current.data.wind_speed;
+  }
+
+  private get _windDeg() {
+    return this._isToday
+      ? `${this._data.current.wind_direction_10m}${this._data.daily_units.wind_direction_10m_dominant}`
+      : this._current.data.wind_direction;
+  }
+
+  private get _backgroundImage() {
+    return getBackgroundImage(
+      this._isToday
+        ? this._data.current.weather_code
+        : this._current.data.weather_code,
+      this._isToday ? this._data.current.is_day === 1 : true
+    );
+  }
+
   private get _currentWeather() {
-    const isToday = this._current.data.isToday;
     return {
       precipitation_probability: this._currentPrecipitation,
       weather: {
-        id: isToday
-          ? this._data.current.weather_code
-          : this._current.data.weather_code,
-        description:
-          weatherDescriptions[
-            isToday
-              ? this._data.current.weather_code
-              : this._current.data.weather_code
-          ].day.description,
-        icon: weatherDescriptions[
-          isToday
-            ? this._data.current.weather_code
-            : this._current.data.weather_code
-        ][isToday ? (this._data.current.is_day === 1 ? 'day' : 'night') : 'day']
-          .image,
+        description: this._description,
+        icon: this._icon,
       },
       main: {
-        temp: isToday
-          ? this._data.current.temperature_2m
-          : this._current.data.temperature_max,
-        humidity: isToday ? this._data.current.relative_humidity_2m : undefined,
+        temp: this._temp,
       },
       wind: {
-        speed: isToday
-          ? this._data.current.wind_speed_10m
-          : this._current.data.wind_speed,
-        deg: isToday
-          ? this._data.current.wind_direction_10m
-          : this._current.data.wind_direction,
+        speed: this._windSpeed,
+        deg: this._windDeg,
       },
       name: this._location.name,
-      backgroundImage: getBackgroundImage(
-        isToday
-          ? this._data.current.weather_code
-          : this._current.data.weather_code,
-        isToday ? this._data.current.is_day === 1 : true
-      ),
+      backgroundImage: this._backgroundImage,
     };
   }
 }

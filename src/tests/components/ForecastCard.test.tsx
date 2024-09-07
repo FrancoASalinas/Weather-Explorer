@@ -28,19 +28,19 @@ const indexedData = indexRows(transformedDataMock);
 
 it.each(indexedData)(
   'Should render max temperature',
-  async ({ index, temperature_max, units }) => {
+  async ({ index, temperature_max }) => {
     setup(index);
 
-    await screen.findByText(`${temperature_max}${units.temperature_2m_max}`);
+    await screen.findByText(temperature_max);
   }
 );
 
 it.each(indexedData)(
   'Should render min temperature',
-  async ({ index, temperature_min, units }) => {
+  async ({ index, temperature_min }) => {
     setup(index);
 
-    await screen.findByText(`${temperature_min}${units.temperature_2m_max}`);
+    await screen.findByText(temperature_min);
   }
 );
 

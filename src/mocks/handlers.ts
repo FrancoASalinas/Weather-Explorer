@@ -21,7 +21,7 @@ export const handlers = [
     }
   ),
   http.get(
-    'http://api.openweathermap.org/geo/1.0/reverse',
+    'https://api.openweathermap.org/geo/1.0/reverse',
     async ({ request }) => {
       const url = new URL(request.url);
       const lat = url.searchParams.get('lat');

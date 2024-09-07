@@ -2,7 +2,6 @@
 import { Forecast } from 'src/utils/transformForecastData';
 import Wind from 'src/assets/icons/wind-icon.svg?react';
 import Temperature from 'src/assets/icons/temperature-icon.svg?react';
-import Humidity from 'src/assets/icons/humidity-icon.svg?react';
 import Precipitation from 'src/assets/icons/precipitation-icon.svg?react';
 
 function Weather({
@@ -26,7 +25,11 @@ function Weather({
       {backgroundImage && (
         <>
           <div className='weather__background-image'>
-            <img src={backgroundImage} onLoad={onImageLoad} data-testid='weather-background-image'/>
+            <img
+              src={backgroundImage}
+              onLoad={onImageLoad}
+              data-testid='weather-background-image'
+            />
           </div>
         </>
       )}
@@ -37,22 +40,16 @@ function Weather({
       </span>
       <div className='weather__data weather__data--temp'>
         <Temperature className='weather__data__icon weather__data__icon--temperature' />
-        {main.temp}ºC
+        {main.temp}
       </div>
-      {main.humidity && (
-        <div className='weather__data weather__data--humidity weather__data__icon--humidity'>
-          <Humidity className='weather__data__icon' />
-          {main.humidity}%
-        </div>
-      )}
       <div className='weather__data weather__data--precipitation'>
         <Precipitation className='weather__data__icon weather__data__icon--precipitation' />
-        {precipitation_probability}%
+        {precipitation_probability}
       </div>
       <div className='weather__data weather__data--wind'>
         <Wind className='weather__data__icon weather__data__icon--wind' />
         <div className=''>
-          <span>{wind.speed}km/h</span> <span>{wind.deg}º</span>
+          <span>{wind.speed}</span> <span>{wind.deg}</span>
         </div>
       </div>
     </>

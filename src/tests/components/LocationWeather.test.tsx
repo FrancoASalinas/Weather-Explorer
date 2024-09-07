@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import LocationWeather from 'src/components/LocationWeather';
 import { carousel } from 'src/constants/ForecastCarousel';
 import locationDataMock from 'src/mocks/locationDataMock';
@@ -14,6 +14,16 @@ function setup(
   return componentSetup(<LocationWeather coords={{ lat, lon }} />);
 }
 
+async function loadBackgroundImage() {
+  fireEvent.load(
+    await screen.findByTestId(
+      'weather-background-image',
+      {},
+      { timeout: 10000 }
+    )
+  );
+}
+
 const forecastDataMock = transformForecastData(
   forecastMock,
   locationDataMock[0]
@@ -27,6 +37,7 @@ it('Should show the city name', async () => {
 
 it('Should render the forecast carousel', async () => {
   setup();
+  await loadBackgroundImage();
   await screen.findByTestId(carousel.testid, {}, { timeout: 20000 });
 }, 30000);
 
@@ -39,37 +50,33 @@ it(`Should render weather`, async () => {
 it('Should render the weather for every selected card', async () => {
   const { user } = setup();
 
+  await loadBackgroundImage();
+
   for (let {
     precipitation_probability_max,
     temperature_max,
     time,
     wind_direction,
     wind_speed,
-    units,
     isToday,
   } of forecastDataMock.daily) {
     const card = await screen.findByText(time);
-
     await user.click(card);
     console.log(`clicked card with date: ${time}`);
 
     await screen.findByText(
-      `${
-        isToday
-          ? forecastDataMock.current.precipitation_probability
-          : precipitation_probability_max
-      }${units.precipitation_probability_max}`
+      isToday
+        ? forecastDataMock.current.precipitation_probability
+        : precipitation_probability_max
+    );
+    await screen.findAllByText(
+      isToday ? forecastDataMock.current.main.temp : temperature_max
     );
     await screen.findByText(
-      `${isToday ? forecastDataMock.current.main.temp : temperature_max}ºC`
+      isToday ? forecastDataMock.current.wind.deg : wind_direction
     );
     await screen.findByText(
-      `${isToday ? forecastDataMock.current.wind.deg : wind_direction}º`
-    );
-    await screen.findByText(
-      `${isToday ? forecastDataMock.current.wind.speed : wind_speed}${
-        units.wind_speed_10m_max
-      }`
+      isToday ? forecastDataMock.current.wind.speed : wind_speed
     );
   }
 }, 30000);

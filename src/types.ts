@@ -27,7 +27,6 @@ type ForecastData = {
     time: string;
     interval: string;
     temperature_2m: string;
-    relative_humidity_2m: string;
     is_day: string;
     weather_code: string;
     wind_speed_10m: string;
@@ -37,7 +36,6 @@ type ForecastData = {
     time: string;
     interval: number;
     temperature_2m: number;
-    relative_humidity_2m: number;
     is_day: number;
     weather_code: number;
     wind_speed_10m: number;
@@ -66,12 +64,11 @@ type ForecastData = {
 type ForecastCardData = {
   time: ForecastData['daily']['time'][0];
   weather_code: ForecastData['daily']['weather_code'][0];
-  precipitation_probability_max: ForecastData['daily']['precipitation_probability_max'][0];
-  temperature_max: ForecastData['daily']['temperature_2m_max'][0];
-  temperature_min: ForecastData['daily']['temperature_2m_min'][0];
-  wind_direction: ForecastData['daily']['wind_direction_10m_dominant'][0];
-  wind_speed: ForecastData['daily']['wind_speed_10m_max'][0];
-  units: ForecastData['daily_units'];
+  precipitation_probability_max: string;
+  temperature_max: string;
+  temperature_min: string;
+  wind_direction: string;
+  wind_speed: string;
   isToday: boolean;
 };
 
