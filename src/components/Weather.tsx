@@ -3,6 +3,7 @@ import { Forecast } from 'src/utils/transformForecastData';
 import Wind from 'src/assets/icons/wind-icon.svg?react';
 import Temperature from 'src/assets/icons/temperature-icon.svg?react';
 import Precipitation from 'src/assets/icons/precipitation-icon.svg?react';
+import WindDirection from './WindDirection';
 
 function Weather({
   weatherData,
@@ -48,9 +49,8 @@ function Weather({
       </div>
       <div className='weather__data weather__data--wind'>
         <Wind className='weather__data__icon weather__data__icon--wind' />
-        <div className=''>
-          <span>{wind.speed}</span> <span>{wind.deg}</span>
-        </div>
+          <span>{wind.speed}</span>{' '}
+            <WindDirection direction={Number(wind.deg.slice(0, -1))} />
       </div>
     </>
   );

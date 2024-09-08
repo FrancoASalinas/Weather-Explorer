@@ -10,7 +10,7 @@
     'name icon'
     'desc desc'
     'temp precipitation'
-    'wind humid'
+    'wind wind'
     'forecast forecast';
   row-gap: var(--size-2);
   column-gap: var(--size-7);
@@ -94,6 +94,9 @@
 
 .weather__data--wind {
   grid-area: wind;
+  width: 100%;
+  display: flex;
+  justify-content: start;
 }
 
 .weather__data__icon {
@@ -105,11 +108,6 @@
   fill: none;
   stroke: var(--primary-300);
   stroke-opacity: 1;
-}
-
-.weather__data__icon--humidity {
-  fill: var(--primary-300);
-  fill-opacity: 1;
 }
 
 .weather__data__icon--precipitation {
@@ -141,4 +139,45 @@
   height: 100%;
   mix-blend-mode: multiply;
   filter: contrast(0.4) saturate(0.5);
+}
+
+.wind-direction-container {
+  height: full;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: var(--size-2);
+}
+
+.arrow-icon {
+  fill: var(--primary-100);
+  height: var(--size-4);
+  width: auto;
+}
+
+.arrow-icon--N {
+  transform: rotate(0deg);
+}
+
+.arrow-icon--NE {
+  transform: rotate(45deg);
+}
+.arrow-icon--E {
+  transform: rotate(90deg);
+}
+.arrow-icon--SE {
+  transform: rotate(135deg);
+}
+.arrow-icon--S {
+  transform: rotate(180deg);
+}
+.arrow-icon--SW {
+  transform: rotate(225deg);
+}
+.arrow-icon--W {
+  transform: rotate(270deg);
+}
+.arrow-icon--NW {
+  transform: rotate(315deg);
 }

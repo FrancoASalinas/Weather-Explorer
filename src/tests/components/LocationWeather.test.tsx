@@ -56,7 +56,6 @@ it('Should render the weather for every selected card', async () => {
     precipitation_probability_max,
     temperature_max,
     time,
-    wind_direction,
     wind_speed,
     isToday,
   } of forecastDataMock.daily) {
@@ -71,9 +70,6 @@ it('Should render the weather for every selected card', async () => {
     );
     await screen.findAllByText(
       isToday ? forecastDataMock.current.main.temp : temperature_max
-    );
-    await screen.findByText(
-      isToday ? forecastDataMock.current.wind.deg : wind_direction
     );
     await screen.findByText(
       isToday ? forecastDataMock.current.wind.speed : wind_speed
