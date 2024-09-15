@@ -16,7 +16,7 @@ function useForecastData(
           location ? location.lat : coords.lat
         }&longitude=${
           location ? location.lon : coords.lon
-        }&current=temperature_2m,is_day,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&past_days=7&forecast_days=8`
+        }&timezone=auto&current=temperature_2m,is_day,relative_humidity_2m,weather_code,wind_speed_10m,wind_direction_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&past_days=7&forecast_days=8&hourly=temperature_2m,precipitation_probability,weather_code,wind_speed_10m,wind_direction_10m`
       : null
   );
   const [newLocation, newLocationError] = useFetch<Location[]>(

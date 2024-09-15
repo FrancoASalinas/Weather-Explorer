@@ -18,6 +18,60 @@
   list-style: none;
 }
 
+.chart {
+  text-shadow: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform: translateX(100%);
+  background-color: var(--primary-900);
+  z-index: 600;
+  transition: 300ms;
+  padding-left: var(--size-3);
+}
+
+.chart--active {
+  transform: translate(0);
+}
+
+.chart__button {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 50%;
+  right: 100%;
+  width: calc(var(--size-4) + 2px);
+  padding: var(--size-1);
+  height: var(--size-7);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 0;
+  background-color: var(--primary-900);
+  transition: 300ms;
+}
+
+.chart__button--active {
+  border-top-left-radius: 0;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 10px;
+  transform: translateX(100%);
+  background-color: #fff;
+}
+
+.chart__button__icon {
+  fill: var(--primary-100);
+  transform: rotate(180deg);
+}
+
+.chart__button--active .chart__button__icon {
+  fill: var(--primary-900);
+  transform: rotate(0);
+}
+
 @font-face {
   font-family: 'Work Sans';
   src: url('./assets/WorkSans.ttf') format('truetype');

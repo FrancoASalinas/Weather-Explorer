@@ -59,6 +59,23 @@ type ForecastData = {
     wind_direction_10m_dominant: number[];
     precipitation_probability_max: number[];
   };
+  hourly_units: {
+    time: string;
+    temperature_2m: string;
+    precipitation_probability: string;
+    weather_code: string;
+    wind_speed_10m: string;
+    wind_direction_10m: string;
+  };
+  hourly: {
+    time: string[];
+    temperature_2m: number[];
+    precipitation_probability: number[];
+    weather_code: number[];
+    wind_speed_10m: number[];
+    wind_direction_10m: number[];
+  };
+  timezone: string;
 };
 
 type ForecastCardData = {

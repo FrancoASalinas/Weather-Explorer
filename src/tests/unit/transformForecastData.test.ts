@@ -1,8 +1,10 @@
 import forecastMock, {
   expectedCurrent,
   expectedDaily,
+  expectedHourly,
 } from 'src/mocks/forecastMock';
 import locationDataMock from 'src/mocks/locationDataMock';
+import formatDate from 'src/utils/formatDate';
 import getBackgroundImage from 'src/utils/getBackgroundImage';
 import transformForecastData from 'src/utils/transformForecastData';
 import weatherDescriptions from 'src/utils/weatherDescriptions';
@@ -16,6 +18,7 @@ it('Should transform api data to an object mapped for easy access', async () => 
 
   expect(transformedData.current).toEqual(expectedCurrent);
   expect(transformedData.daily).toEqual(expectedDaily);
+  expect(transformedData.hourly).toMatchObject(expectedHourly);
 });
 
 it('Should change current data when setting current field', async () => {
@@ -61,5 +64,17 @@ it('Should change current data when setting current field', async () => {
       ),
       precipitation_probability: precipitation_probability_max,
     });
+  }
+});
+
+it('Should change hourly data when setting current field', () => {
+  const transformedData = getTransformedDataMock();
+
+  for (let i = 0; i < transformedData.daily.length; i++) {
+    transformedData.setCurrent(transformedData.daily[i]);
+
+    const { day } = transformedData.hourly;
+
+    expect(formatDate(day.toString())).toBe(transformedData.daily[i].time);
   }
 });

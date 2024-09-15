@@ -2,6 +2,7 @@ import { ForecastCardData, ForecastData, Location } from 'src/types';
 import formatDate from './formatDate';
 import weatherDescriptions from './weatherDescriptions';
 import getBackgroundImage from './getBackgroundImage';
+import HourlyDataView from './HourlyDataView';
 
 function transformForecastData(data: ForecastData, location: Location) {
   return new Forecast(data, location);
@@ -18,8 +19,8 @@ class CurrentForecast {
 }
 
 class Daily {
-  _data: ForecastData;
-  _units: ForecastData['daily_units'];
+  private _data: ForecastData;
+  private _units: ForecastData['daily_units'];
   constructor(data: ForecastData) {
     this._data = data;
     this._units = data.daily_units;
@@ -64,10 +65,11 @@ class Daily {
 }
 
 class Forecast {
-  readonly _data: ForecastData;
-  readonly _location: Location;
+  private _data: ForecastData;
+  private _location: Location;
   private _current: CurrentForecast;
-  readonly _daily: ForecastCardData[];
+  private _daily: ForecastCardData[];
+  private _hourly: HourlyDataView;
   public daily;
 
   constructor(data: ForecastData, location: Location) {
@@ -77,8 +79,17 @@ class Forecast {
     this._current = new CurrentForecast(
       this._daily.find(({ isToday }) => isToday === true) || this._daily[7]
     );
+    this._hourly = new HourlyDataView(data);
     this.daily = this._daily;
   }
+
+  public get hourly() {
+    const day = this._hourly.dayList.find(
+      ({ day }) => formatDate(day.toString()) === this._current._data.time
+    ) as HourlyDataView['dayList'][0];
+    return day;
+  }
+
   public get current() {
     return this._currentWeather;
   }

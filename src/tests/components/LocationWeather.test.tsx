@@ -76,3 +76,8 @@ it('Should render the weather for every selected card', async () => {
     );
   }
 }, 30000);
+
+it('Should render a button to show the hourly data', async () => {
+  setup();
+  await screen.findByTestId('chart-button', {}, {timeout: 30000});
+}, 30000);

@@ -11,11 +11,12 @@ export default defineConfig({
     environment: 'jsdom',
     testTimeout: 10000,
     setupFiles: 'src/tests/setup.ts',
+    // alias: [{find: '/^@visx/scale$/', replacement: '@visx/scale/esm/index.js'}]
   },
   base: '/Weather-Explorer/',
   resolve: {
     alias: {
       src: '/src'
     }
-  }
+  },
 });
