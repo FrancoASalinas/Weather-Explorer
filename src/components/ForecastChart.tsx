@@ -13,7 +13,7 @@ import {
 import { DateTime } from 'luxon';
 
 function ForecastChart({ forecastData }: { forecastData: Forecast }) {
-  const [isChartWide, setIsChartWide] = useState(false);
+  const [isChartWide, setIsChartWide] = useState(true);
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
