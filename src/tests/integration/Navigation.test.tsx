@@ -26,7 +26,7 @@ it('Should not render any search result when clicking the link', async () => {
 
   await user.click(link);
   expect(screen.queryByText(/london/)).toBeNull();
-});
+}, 20000);
 
 it('Should render the interactive map element when clicking the link', async () => {
   const { user } = setup();

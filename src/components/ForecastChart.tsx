@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import {useMemo} from 'react';
 import { Forecast } from 'src/utils/transformForecastData';
 import {
   LineChart,
@@ -12,22 +12,7 @@ import {
 } from 'recharts';
 import { DateTime } from 'luxon';
 
-function ForecastChart({ forecastData }: { forecastData: Forecast }) {
-  const [isChartWide, setIsChartWide] = useState(true);
-  const chartRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function activateAxies() {
-      if (chartRef.current) {
-        chartRef.current.clientWidth > 900 ? setIsChartWide(true) : setIsChartWide(false);
-      }
-    }
-
-    window.addEventListener('resize', activateAxies);
-    activateAxies();
-
-    return () => window.removeEventListener('resize', activateAxies);
-  }, []);
+function ForecastChart({ forecastData, isWide }: { forecastData: Forecast, isWide: boolean }) {
 
   const {
     hours,
@@ -50,7 +35,7 @@ function ForecastChart({ forecastData }: { forecastData: Forecast }) {
   );
 
   return (
-    <div ref={chartRef} className='chart-wrapper'>
+    <div className='chart-wrapper'>
       <ResponsiveContainer>
         <LineChart data={data}>
           <Line
@@ -85,7 +70,7 @@ function ForecastChart({ forecastData }: { forecastData: Forecast }) {
             dot={false}
             yAxisId={0}
           />
-          {isChartWide && (
+          {isWide && (
             <>
               <YAxis
                 yAxisId={2}

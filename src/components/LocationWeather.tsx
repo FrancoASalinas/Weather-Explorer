@@ -5,7 +5,7 @@ import { Forecast } from 'src/utils/transformForecastData';
 import { ForecastCardData } from 'src/types';
 import useForecast from 'src/utils/useForecast';
 import Weather from './Weather';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ForecastChart from './ForecastChart';
 import Angle from 'src/assets/icons/right-angle.svg?react';
 
@@ -18,15 +18,33 @@ export default function LocationWeather({
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [isChart, setIsChart] = useState(false);
   const isLoading = !forecast && !error;
+  const [isChartWide, setIsChartWide] = useState(true);
+  const weatherRef = useRef<HTMLDivElement>(null);
 
   function handleCardClick(cardData: ForecastCardData) {
     setForecast(cardData);
   }
 
+  useEffect(() => {
+    function activateAxies() {
+      if (weatherRef.current) {
+        window.innerWidth > 900 && weatherRef.current.offsetWidth > 900
+          ? setIsChartWide(true)
+          : setIsChartWide(false);
+      }
+    }
+
+    window.addEventListener('resize', activateAxies);
+    activateAxies();
+
+    return () => window.removeEventListener('resize', activateAxies);
+  }, []);
+
   return (
     <div
       className={isLoading || isLoadingImage ? `weather--loading` : 'weather'}
       data-testid={testId}
+      ref={weatherRef}
     >
       {(isLoading || isLoadingImage) && <LoadingIndicator />}
       {!isLoading && (
@@ -41,7 +59,10 @@ export default function LocationWeather({
             >
               <Angle className='chart__button__icon' />
             </button>
-            <ForecastChart forecastData={forecast as Forecast} />
+            <ForecastChart
+              forecastData={forecast as Forecast}
+              isWide={isChartWide}
+            />
           </div>
           <Weather
             weatherData={forecast?.current as Forecast['current']}
